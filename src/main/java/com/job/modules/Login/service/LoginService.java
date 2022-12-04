@@ -1,8 +1,9 @@
 package com.job.modules.Login.service;
 
+import com.job.entities.User;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public interface LoginService {
-    Boolean login(String username,String password);
+    String login(User user);
 }

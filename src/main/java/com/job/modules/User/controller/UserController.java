@@ -1,27 +1,29 @@
 package com.job.modules.User.controller;
 
-import com.job.common.result.Result;
+import com.job.common.domain.Result;
 import com.job.entities.User;
 import com.job.mapper.UserMapper;
 import com.job.modules.User.service.impl.UserServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
 
+@Api(tags = "用户接口",value = "用户接口")
 @RestController
 @RequestMapping("/user")
 public class UserController {
     @Autowired
     UserMapper userMapper;
-
     @Autowired
     UserServiceImpl userService;
 
-//  --- 增 ---
-
-    @PostMapping("/add")
+    @PostMapping("/save")
     public int addOne(){
         User aUser = new User();
         aUser.setRole(2);
@@ -33,9 +35,7 @@ public class UserController {
         return success;
     }
 
-//  --- 删 ---
-
-    @PostMapping("/delete")
+    @PostMapping("/deleteById")
     public Integer deleteOne(Integer id){
          Integer result =  userMapper.deleteById(id);
          return result;
@@ -47,22 +47,20 @@ public class UserController {
         return result;
     }
 
-//  --- 改 ---
-
     @PostMapping("/update")
     public String updateOne(){
         return "update";
     }
 
-//  --- 查 ---
-
-    @PostMapping("/get")
-    public String getOne(Integer id){
-        User theUser =  userMapper.selectById(id);
-        return "你好"+theUser;
+    @ApiOperation("根据ID查询用户")
+    @ApiImplicitParams(@ApiImplicitParam(name = "id",dataType = "Integer",required = true,value = "传入用户ID"))
+    @PostMapping("/getById")
+    public Result getOne(@RequestBody Integer id){
+        return new Result(userService.getById(id));
     }
 
-    @PostMapping("getAll")
+    @ApiOperation("获取全部用户")
+    @GetMapping("getAll")
     public Result getAll(){
         return new Result(userService.getAll());
     }

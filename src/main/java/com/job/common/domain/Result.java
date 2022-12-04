@@ -1,4 +1,4 @@
-package com.job.common.result;
+package com.job.common.domain;
 
 public class Result {
     private Integer code = 1;

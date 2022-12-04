@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: dev # 选择环境
 
 server:
   port: 8080
@@ -10,6 +10,13 @@ mybatis-plus:
     banner: false
     db-config:
       id-type: auto
+
+security:
+  jwt:
+    secret: Q0hBTkdKVU5GVQ== # 密钥，需要base64
+    ttl: 259200 # 过期时间(三天)
+    issuer: CHANGJUNFU # 签发者
+    name: Token # 名称
 
 ---
 #开发环境
@@ -22,10 +29,14 @@ spring:
     url: jdbc:mysql://localhost:3306/mydb?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: ""
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher  # 解决高版本springboot与swagger路径不兼容的情况
 
 logging:
   level:
     root: warn
+
 
 # mybatis的日志信息
 #mybatis-plus:
