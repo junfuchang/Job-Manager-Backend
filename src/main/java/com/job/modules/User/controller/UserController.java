@@ -61,7 +61,6 @@ public class UserController {
     }
 
     @ApiOperation("获取全部用户")
-    @PreAuthorize("@role.isAllow('USER')")
     @PostMapping("getUserAll")
     public Result getAll(){
         return new Result(userService.getAll());

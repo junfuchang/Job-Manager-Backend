@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * 5.7版本之后使用 @EnableWebSecurity 注解标识配置类
  */
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)  // 开启权限控制
 public class WebSecurityConfig {
     @Autowired
     private AuthenticationEntryPointImpl authenticationEntryPoint;
@@ -65,15 +65,15 @@ public class WebSecurityConfig {
                 // 下面开始设置权限
                 .authorizeRequests(authorize -> authorize
                         // 允许匿名访问
-                        .antMatchers("/login").anonymous()
-//                        .antMatchers("/**").permitAll()
+                        .antMatchers("/login").permitAll()
+                        .antMatchers("/v3/**", "/swagger-resources/**", "/swagger-ui/**", "/webjars/**").permitAll()
                         // 其他地址的访问需验证权限
                         .anyRequest().authenticated()
                 )
                 // 添加 JWT 过滤器，JWT 过滤器在用户名密码认证过滤器之前
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-                // 认证用户时用户信息加载配置，注入springAuthUserService
-//                .userDetailsService(xxxAuthUserService)
+                // 允许跨域
+                .cors().and()
                 .build();
     }
 }
