@@ -14,7 +14,7 @@ mybatis-plus:
 security:
   jwt:
     secret: Q0hBTkdKVU5GVQ== # 密钥，需要base64
-    ttl: 259200 # 过期时间(三天)
+    ttl: 25920000 # 过期时间(三天)
     issuer: CHANGJUNFU # 签发者
     name: Token # 名称
 

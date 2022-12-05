@@ -25,11 +25,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (Objects.isNull(user)) {
             throw new BusinessException(Code.BUSINESS_ERR, "用户名错误，请重新输入！");
         }
-
-
-        // 查询用户信息
-
+        String role = "0";
+        if(!String.valueOf(user.getRole()).equals("")){
+            role = user.getRole().toString();
+        }
         // 需要返回UserDetails类型的对象
-        return new UserDetailsImpl(user);
+        return new UserDetailsImpl(user,role);
     }
 }

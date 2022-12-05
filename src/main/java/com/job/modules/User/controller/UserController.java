@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -60,7 +61,8 @@ public class UserController {
     }
 
     @ApiOperation("获取全部用户")
-    @GetMapping("getAll")
+    @PreAuthorize("@role.isAllow('USER')")
+    @PostMapping("getUserAll")
     public Result getAll(){
         return new Result(userService.getAll());
     }

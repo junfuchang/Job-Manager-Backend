@@ -1,9 +1,8 @@
 package com.job.common.config;
 
-import com.job.common.interceptor.LoginInterceptor;
+import com.job.common.filter.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -15,12 +14,12 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry
-                .addInterceptor(loginInterceptor)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/login")
-                .excludePathPatterns("/user/downloadExcel")
-                .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v3/**", "/swagger-ui.html/**");
+        // 对所有（除login,swagger）接口进行token验证
+//        registry
+//                .addInterceptor(loginInterceptor)
+//                .addPathPatterns("/**")
+//                .excludePathPatterns("/login")
+//                .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v3/**", "/swagger-ui.html/**");
     }
 
     @Override
