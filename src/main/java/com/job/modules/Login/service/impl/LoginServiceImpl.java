@@ -23,7 +23,7 @@ public class LoginServiceImpl implements LoginService {
     private AuthenticationManager authenticationManager;
 
     @Override
-    public String login(User user) {
+    public HashMap<String, Object> login(User user) {
         // 利用AuthenticationManager进行用户认证（下面👇这一行就是 UserDetailsServiceImpl 的返回，返回一个UserDetails对象，再将其给authenticationManager来验证是否通过）
         UsernamePasswordAuthenticationToken passwordAuthenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
         Authentication authenticate = authenticationManager.authenticate(passwordAuthenticationToken);
@@ -32,6 +32,7 @@ public class LoginServiceImpl implements LoginService {
         }
         // 如果通过认证，这jwt生成token并返回
         UserDetailsImpl principal = (UserDetailsImpl) authenticate.getPrincipal(); // 含有用户信息，用户角色等的认证信息
+        User loginUser = principal.getUser();
         String jwt;
         try {
             // 向token中存入哪些信息(UserDetailsImpl类型的信息)
@@ -46,6 +47,11 @@ public class LoginServiceImpl implements LoginService {
         } catch (Exception e) {
             throw new SystemException(Code.SYSTEM_ERR, "生成TOKEN失败，请稍后再试");
         }
-        return jwt;
+
+        HashMap<String, Object> res = new HashMap<>();
+        res.put("token",jwt);
+        loginUser.setPassword("");
+        res.put("userInfo",loginUser);
+        return res;
     }
 }

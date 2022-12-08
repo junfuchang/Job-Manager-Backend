@@ -1,7 +1,9 @@
 package com.job.common.domain;
 
+import com.job.common.enums.Code;
+
 public class Result {
-    private Integer code = 1;
+    private Integer code = Code.SUCCESS;
     private Object data;
     private String message = "";
 

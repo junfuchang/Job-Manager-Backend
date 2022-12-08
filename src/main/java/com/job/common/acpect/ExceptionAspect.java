@@ -21,6 +21,6 @@ public class ExceptionAspect {
 
     @ExceptionHandler(Exception.class)
     public Result doException(Exception e){
-        return new Result(Code.UNKNOWN_ERR,null,"系统繁忙，请稍后再试。（未知错误） - " +e.getMessage());
+        return new Result(Code.UNKNOWN_ERR,null,e.getMessage());
     }
 }

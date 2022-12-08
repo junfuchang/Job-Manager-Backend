@@ -17,32 +17,37 @@ public class UserServiceImpl implements UserService {
     UserMapper user;
 
     @Override
-    public Boolean save(User user) {
+    public Boolean saveUser(User user) {
         return null;
     }
 
     @Override
-    public Boolean delete(Integer id) {
+    public Boolean deleteUser(Integer id) {
         return null;
     }
 
     @Override
-    public Boolean deleteBatch(List<Integer> idList) {
+    public Boolean deleteUserBatch(List<Integer> idList) {
         return null;
     }
 
     @Override
-    public Boolean update(User user) {
+    public Boolean updateUser(User user) {
         return null;
     }
 
     @Override
-    public User getById(Integer id) {
+    public User getUserById(Integer id) {
         return null;
     }
 
     @Override
-    public IPage<User> getAll() {
+    public IPage<User> getUserBySearch() {
+        return null;
+    }
+
+    @Override
+    public IPage<User> getUserAll() {
         IPage<User> userIPage = new Page<>(1,3);
         user.selectPage(userIPage,null);
         return userIPage;

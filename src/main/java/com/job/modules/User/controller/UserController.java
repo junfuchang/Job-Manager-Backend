@@ -57,12 +57,12 @@ public class UserController {
     @ApiImplicitParams(@ApiImplicitParam(name = "id",dataType = "Integer",required = true,value = "传入用户ID"))
     @PostMapping("/getById")
     public Result getOne(@RequestBody Integer id){
-        return new Result(userService.getById(id));
+        return new Result(userService.getUserById(id));
     }
 
     @ApiOperation("获取全部用户")
-    @PostMapping("getUserAll")
+    @PostMapping("/getUserAll")
     public Result getAll(){
-        return new Result(userService.getAll());
+        return new Result(userService.getUserAll());
     }
 }

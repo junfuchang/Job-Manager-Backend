@@ -16,7 +16,10 @@ class JobBackendApplicationTests {
 
     @Test
     void contextLoads() throws Exception {
-        System.out.println(Role.getCode("12"));
+//        eecb6287dd992fbf23df5167ec851a98
+
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        System.out.println(bCryptPasswordEncoder.encode("123456"));
     }
 
 }
