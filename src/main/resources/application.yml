@@ -28,14 +28,14 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/mydb?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
-    password: ""
+    password: "123456"
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher  # 解决高版本springboot与swagger路径不兼容的情况
 
-logging:
-  level:
-    root: warn
+#logging:
+#  level:
+#    root: warn
 
 
 # mybatis的日志信息

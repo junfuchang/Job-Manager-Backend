@@ -8,22 +8,29 @@ import com.job.modules.User.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    UserMapper user;
+    UserMapper userMapper;
 
     @Override
     public Boolean saveUser(User user) {
-        return null;
+        if(userMapper.insert(user) == 1){
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public Boolean deleteUser(Integer id) {
-        return null;
+    public Boolean deleteUserById(Integer id) {
+        if(userMapper.deleteById(id) == 1){
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -33,23 +40,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean updateUser(User user) {
-        return null;
+        if(userMapper.updateById(user) == 1){
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public User getUserById(Integer id) {
-        return null;
-    }
-
-    @Override
-    public IPage<User> getUserBySearch() {
-        return null;
-    }
-
-    @Override
-    public IPage<User> getUserAll() {
-        IPage<User> userIPage = new Page<>(1,3);
-        user.selectPage(userIPage,null);
+    public IPage<User> getUserBySearch(HashMap data) {
+        IPage<User> userIPage = new Page<>( (Integer)data.get("current"),(Integer)data.get("pageSize"));
+        userMapper.selectPage(userIPage,null);
         return userIPage;
     }
+
+//    @Override
+//    public IPage<User> getUserAll() {
+//        IPage<User> userIPage = new Page<>(1,3);
+//        userMapper.selectPage(userIPage,null);
+//        return userIPage;
+//    }
 }

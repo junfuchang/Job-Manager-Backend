@@ -14,7 +14,7 @@ public class SwaggerConfig {
     public Docket createRestApi() {
         return new Docket(DocumentationType.OAS_30)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.job.modules.*.controller")) // 设置扫描路径
+                .apis(RequestHandlerSelectors.basePackage("com.job.modules")) // 设置扫描路径
                 .build();
     }
 

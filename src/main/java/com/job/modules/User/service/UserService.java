@@ -4,12 +4,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.job.entities.User;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Transactional
 public interface UserService {
     /**
      * 新增用户
+     *
      * @return
      */
     Boolean saveUser(User user);
@@ -19,7 +21,7 @@ public interface UserService {
      * @param id
      * @return
      */
-    Boolean deleteUser(Integer id);
+    Boolean deleteUserById(Integer id);
 
     /**
      * 批量删除用户
@@ -36,21 +38,8 @@ public interface UserService {
     Boolean updateUser(User user);
 
     /**
-     * 查询用户 - id
-     * @param id
+     * 查询用户
      * @return
      */
-    User getUserById(Integer id);
-
-    /**
-     * 查询全部的用户
-     * @return
-     */
-    IPage<User> getUserBySearch();
-
-    /**
-     * 查询全部的用户
-     * @return
-     */
-    IPage<User> getUserAll();
+    IPage<User> getUserBySearch(HashMap data);
 }

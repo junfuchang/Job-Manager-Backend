@@ -19,7 +19,7 @@ class JobBackendApplicationTests {
 //        eecb6287dd992fbf23df5167ec851a98
 
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        System.out.println(bCryptPasswordEncoder.encode("123456"));
+        System.out.println(bCryptPasswordEncoder.encode("e10adc3949ba59abbe56e057f20f883e"));
     }
 
 }

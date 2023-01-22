@@ -22,6 +22,10 @@ public class User {
     @ApiModelProperty("用户名")
     private String username;
 
+    @ApiModelProperty("学号")
+    @TableField(value = "student_num")
+    private String studentNum;
+
     @ApiModelProperty("密码")
     private String password;
 
