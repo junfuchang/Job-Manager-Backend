@@ -10,8 +10,9 @@ public class Role {
      * 使用 Role.getCode(0) 获取权限值
      */
     public static final HashMap<String,Integer> List= new HashMap<String,Integer>(){{
-        put("USER",1);
-        put("ADMIN",10);
+        put("STUDENT",0);
+        put("COMPANY",1);
+        put("ADMIN",2);
     }};
     public static Integer getCode(String role){
         Integer code = Role.List.get(role);

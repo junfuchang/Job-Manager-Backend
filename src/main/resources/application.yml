@@ -26,24 +26,33 @@ spring:
       on-profile: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/mydb?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://localhost:3306/job_manager_db?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: "123456"
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher  # 解决高版本springboot与swagger路径不兼容的情况
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
 
 #logging:
 #  level:
 #    root: warn
 
-
 # mybatis的日志信息
-#mybatis-plus:
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+
 
 ---
+
+
+
 #生产环境
 spring:
   config:

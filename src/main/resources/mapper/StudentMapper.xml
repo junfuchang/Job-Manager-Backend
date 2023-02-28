@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.job.mapper.StudentMapper">
+
+    <resultMap id="BaseResultMap" type="com.job.entities.Student">
+            <id property="studentId" column="student_id" jdbcType="INTEGER"/>
+            <id property="amountId" column="amount_id" jdbcType="INTEGER"/>
+            <id property="majorId" column="major_id" jdbcType="INTEGER"/>
+            <id property="resumerId" column="resumer_id" jdbcType="INTEGER"/>
+            <result property="gender" column="gender" jdbcType="INTEGER"/>
+            <result property="contact" column="contact" jdbcType="VARCHAR"/>
+            <result property="address" column="address" jdbcType="VARCHAR"/>
+            <result property="graduateFlag" column="graduate_flag" jdbcType="INTEGER"/>
+            <result property="direction" column="direction" jdbcType="INTEGER"/>
+            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+            <result property="date" column="date" jdbcType="TIMESTAMP"/>
+            <result property="degree" column="degree" jdbcType="INTEGER"/>
+            <result property="salary" column="salary" jdbcType="INTEGER"/>
+            <result property="industry" column="industry" jdbcType="VARCHAR"/>
+            <result property="post" column="post" jdbcType="VARCHAR"/>
+            <result property="remark" column="remark" jdbcType="VARCHAR"/>
+            <result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
+            <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        student_id,amount_id,major_id,
+        resumer_id,gender,contact,
+        address,graduate_flag,direction,
+        avatar,date,degree,
+        salary,industry,post,
+        remark,birthday,delete_flag
+    </sql>
+</mapper>

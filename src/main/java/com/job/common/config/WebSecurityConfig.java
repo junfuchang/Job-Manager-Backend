@@ -65,7 +65,9 @@ public class WebSecurityConfig {
                 // 下面开始设置权限
                 .authorizeRequests(authorize -> authorize
                         // 允许匿名访问
-                        .antMatchers("/login").permitAll()
+                        .antMatchers("/login","/login/**").permitAll()
+                        .antMatchers("/major","/major/**").permitAll()
+                        .antMatchers("/file","/file/**").permitAll()
                         .antMatchers("/v3/**", "/swagger-resources/**", "/swagger-ui/**", "/webjars/**").permitAll()
                         // 其他地址的访问需验证权限
                         .anyRequest().authenticated()

@@ -1,11 +1,7 @@
 package com.job.common.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.job.common.domain.Login.UserDetailsImpl;
-import com.job.common.enums.Code;
-import com.job.common.exception.BusinessException;
 import com.job.common.utils.JwtUtils;
-import com.job.entities.User;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

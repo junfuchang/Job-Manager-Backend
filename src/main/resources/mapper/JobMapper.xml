@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.job.mapper.JobMapper">
+
+    <resultMap id="BaseResultMap" type="com.job.entities.Job">
+            <id property="jobId" column="job_id" jdbcType="INTEGER"/>
+            <id property="companyId" column="company_id" jdbcType="INTEGER"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="deadline" column="deadline" jdbcType="TIMESTAMP"/>
+            <result property="claim" column="claim" jdbcType="VARCHAR"/>
+            <result property="contact" column="contact" jdbcType="VARCHAR"/>
+            <result property="address" column="address" jdbcType="VARCHAR"/>
+            <result property="salary" column="salary" jdbcType="VARCHAR"/>
+            <result property="openFlag" column="open_flag" jdbcType="INTEGER"/>
+            <result property="type" column="type" jdbcType="VARCHAR"/>
+            <result property="pic" column="pic" jdbcType="VARCHAR"/>
+            <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        job_id,company_id,title,
+        create_time,deadline,claim,
+        contact,address,salary,
+        open_flag,type,pic,
+        delete_flag
+    </sql>
+</mapper>

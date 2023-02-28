@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.job.mapper.MajorMapper">
+
+    <resultMap id="BaseResultMap" type="com.job.entities.Major">
+            <id property="majorId" column="major_id" jdbcType="INTEGER"/>
+            <id property="collegeId" column="college_id" jdbcType="INTEGER"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <select id="getAllMajors" resultType="com.job.modules.Major.vo.SqlItemVo">
+        select c.college_id as collegeId,c.name as collegeName,m.major_id as majorId,m.name as majorName
+        from major m
+        left join college c
+            on c.college_id = m.college_id
+        ORDER BY major_id
+    </select>
+</mapper>

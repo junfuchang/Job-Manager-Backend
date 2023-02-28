@@ -1,7 +1,6 @@
 package com.job.common.domain.Login;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.job.entities.User;
+import com.job.entities.Amount;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,7 +12,7 @@ import java.util.*;
 @NoArgsConstructor
 public class UserDetailsImpl implements UserDetails {
 
-    private User user;
+    private Amount amount;
 
     private String role;
 
@@ -22,8 +21,8 @@ public class UserDetailsImpl implements UserDetails {
      */
     private List<SimpleGrantedAuthority> authorities;
 
-    public UserDetailsImpl(User user, String role) {
-        this.user = user;
+    public UserDetailsImpl(Amount amount, String role) {
+        this.amount = amount;
         this.role = role;
     }
 
@@ -39,12 +38,12 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return amount.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return amount.getUsername();
     }
 
     /**

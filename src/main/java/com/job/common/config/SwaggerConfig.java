@@ -17,5 +17,4 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.job.modules")) // 设置扫描路径
                 .build();
     }
-
 }

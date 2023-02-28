@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.job.mapper.AmountMapper">
+
+    <resultMap id="BaseResultMap" type="com.job.entities.Amount">
+            <id property="amountId" column="amount_id" jdbcType="INTEGER"/>
+            <id property="roleId" column="role_id" jdbcType="INTEGER"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        amount_id,role_id,username,
+        password,delete_flag
+    </sql>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select * from amount where amount_id = 1;
+    </select>
+</mapper>

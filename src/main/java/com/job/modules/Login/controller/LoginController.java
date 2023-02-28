@@ -1,26 +1,36 @@
 package com.job.modules.Login.controller;
 
-import com.job.common.enums.Code;
-import com.job.common.exception.BusinessException;
 import com.job.common.domain.Result;
-import com.job.entities.User;
-import com.job.modules.Login.service.impl.LoginServiceImpl;
+import com.job.entities.Amount;
+import com.job.modules.Login.dto.CompanyRegister;
+import com.job.modules.Login.dto.StudentRegister;
+import com.job.modules.Login.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
+import java.lang.reflect.InvocationTargetException;
 
 @RestController
 @RequestMapping("/login")
 public class LoginController {
     @Autowired
-    LoginServiceImpl loginService;
+    LoginService loginService;
 
     @PostMapping(value = {"", "/"})
-    public Result login(@RequestBody User user){
-        return new Result(loginService.login(user));
+    public Result login(@RequestBody Amount amount){
+        return new Result(loginService.login(amount));
+    }
+
+    @PostMapping(value = {"/stu-register"})
+    public Result stuRegister(@RequestBody StudentRegister stuInfo) throws InvocationTargetException, IllegalAccessException {
+        return loginService.studentRegister(stuInfo);
+    }
+
+    @PostMapping(value = {"/comp-register"})
+    public Result companyRegister(@RequestBody CompanyRegister compInfo) throws InvocationTargetException, IllegalAccessException {
+        return loginService.companyRegister(compInfo);
     }
 }
