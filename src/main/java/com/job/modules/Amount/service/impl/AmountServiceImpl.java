@@ -19,17 +19,6 @@ import java.util.List;
 public class AmountServiceImpl extends ServiceImpl<AmountMapper, Amount>
     implements AmountService {
 
-    @Autowired
-    private AmountMapper amountMapper;
-
-    @Override
-    public Page<Amount> alist() {
-        Page<Amount> amountPage = new Page<>(1,2);
-        return  amountMapper.selectPage(amountPage,null);
-
-
-//        return amountMapper.getById();
-    }
 }
 
 

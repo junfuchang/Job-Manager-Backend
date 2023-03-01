@@ -17,16 +17,6 @@ import java.util.List;
 @RequestMapping("/amount")
 public class AmountController {
 
-    @Autowired
-    private AmountServiceImpl amountService;
-
-    @PostMapping("/getById")
-    public Result deleteById(){
-            return new Result(amountService.alist());
-    }
-
-
-
 //    @Autowired
 //    UserMapper userMapper;
 //    @Autowired

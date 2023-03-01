@@ -12,6 +12,5 @@ import java.util.List;
 * @createDate 2023-02-26 23:04:21
 */
 public interface AmountService extends IService<Amount> {
-     Page<Amount> alist();
 
 }

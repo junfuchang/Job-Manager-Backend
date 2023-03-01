@@ -17,7 +17,4 @@
         password,delete_flag
     </sql>
 
-    <select id="getById" resultMap="BaseResultMap">
-        select * from amount where amount_id = 1;
-    </select>
 </mapper>
