@@ -5,6 +5,7 @@ import com.job.entities.Amount;
 import com.job.modules.Login.dto.CompanyRegister;
 import com.job.modules.Login.dto.StudentRegister;
 import com.job.modules.Login.service.LoginService;
+import com.job.modules.Login.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,5 +33,15 @@ public class LoginController {
     @PostMapping(value = {"/comp-register"})
     public Result companyRegister(@RequestBody CompanyRegister compInfo) throws InvocationTargetException, IllegalAccessException {
         return loginService.companyRegister(compInfo);
+    }
+
+
+
+    @Autowired
+    MenuService menuService;
+
+    @PostMapping("menu")
+    public Result getMenu(){
+        return new Result(menuService.getSonMenu(0));
     }
 }

@@ -2,6 +2,7 @@ package com.job.modules.Login.vo;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -10,7 +11,6 @@ public class MenuItemVo {
      * 菜单id
      */
     private Integer menuId;
-
     /**
      * 菜单名称
      */
@@ -37,14 +37,19 @@ public class MenuItemVo {
     private String menuImgClass;
 
     /**
+     * 组件路径
+     */
+    private String componentPath;
+
+    /**
      * 父级菜单的menuId, 没有父级时，值设置为0
      */
-    private Integer pId;
+    private Integer parentId;
 
     /**
      * 菜单的状态，0 有效，1无效
      */
-    private String menuState;
+    private Integer menuState;
 
     /**
      * 是否包含子组件中
@@ -54,6 +59,6 @@ public class MenuItemVo {
     /**
      * 子菜单列表，必须是数组类型
      */
-    private List<MenuItemVo> menuChilds;
+    private List<MenuItemVo> menuChilds  = new ArrayList<>();
 
 }

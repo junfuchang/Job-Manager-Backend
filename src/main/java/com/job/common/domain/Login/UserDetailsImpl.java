@@ -14,14 +14,14 @@ public class UserDetailsImpl implements UserDetails {
 
     private Amount amount;
 
-    private String role;
+    private Integer role;
 
     /**
      * 该参数仅用于权限校验，无需构造方法传入
      */
     private List<SimpleGrantedAuthority> authorities;
 
-    public UserDetailsImpl(Amount amount, String role) {
+    public UserDetailsImpl(Amount amount, Integer role) {
         this.amount = amount;
         this.role = role;
     }
@@ -31,16 +31,24 @@ public class UserDetailsImpl implements UserDetails {
         if(Objects.nonNull(authorities)){
             return authorities;
         }
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role);
+//        核心：authority    注意点：role.toString()
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.toString());
         authorities = Arrays.asList(authority);
         return authorities;
     }
 
+    /**
+     * 必须重写：用于返回数据库中的密码
+     * @return
+     */
     @Override
     public String getPassword() {
         return amount.getPassword();
     }
-
+    /**
+     * 必须重写：用于返回数据库中的用户名
+     * @return
+     */
     @Override
     public String getUsername() {
         return amount.getUsername();

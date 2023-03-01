@@ -30,29 +30,11 @@ public class WebSecurityConfig {
     private AccessDeniedHandlerImpl accessDeniedHandler;
 
     /**
-     * jwt 校验过滤器，从 http 头部 Authorization 字段读取 token 并校验
+     * SecurityFilterChain  SecurityFilter拦截链
+     * @param http
+     * @return
+     * @throws Exception
      */
-    @Bean
-    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() throws Exception {
-        return new JwtAuthenticationTokenFilter();
-    }
-
-    /**
-     * 配置用户登陆加解密工具
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
-
-    /**
-     * 获取AuthenticationManager（认证管理器），登录时认证使用
-     */
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
-
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
@@ -78,4 +60,29 @@ public class WebSecurityConfig {
                 .cors().and()
                 .build();
     }
+
+    /**
+     * jwt 校验过滤器，从 http 头部 Authorization 字段读取 token 并校验
+     */
+    @Bean
+    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() throws Exception {
+        return new JwtAuthenticationTokenFilter();
+    }
+
+    /**
+     * 配置用户登陆加解密工具
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * 获取AuthenticationManager（认证管理器），登录时认证使用
+     */
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
 }

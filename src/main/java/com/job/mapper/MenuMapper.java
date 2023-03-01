@@ -2,7 +2,10 @@ package com.job.mapper;
 
 import com.job.entities.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
+import com.job.modules.Login.vo.MenuItemVo;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 /**
 * @author cjf
@@ -12,7 +15,8 @@ import org.apache.ibatis.annotations.Mapper;
 */
 @Mapper
 public interface MenuMapper extends BaseMapper<Menu> {
-
+    List<MenuItemVo> getSonMenuSql (@Param("parentId") Integer parentId);
+    List<MenuItemVo> getTopMenuList (@Param("roleId") Integer roleId);
 }
 
 

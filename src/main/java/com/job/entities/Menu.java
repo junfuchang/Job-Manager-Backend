@@ -55,7 +55,7 @@ public class Menu implements Serializable {
     /**
      * 是否启用菜单项
      */
-    private Integer menustate;
+    private Integer menuState;
 
     /**
      * 是否包含子菜单
@@ -84,7 +84,7 @@ public class Menu implements Serializable {
             && (this.getPathName() == null ? other.getPathName() == null : this.getPathName().equals(other.getPathName()))
             && (this.getComponentPath() == null ? other.getComponentPath() == null : this.getComponentPath().equals(other.getComponentPath()))
             && (this.getMenuImgClass() == null ? other.getMenuImgClass() == null : this.getMenuImgClass().equals(other.getMenuImgClass()))
-            && (this.getMenustate() == null ? other.getMenustate() == null : this.getMenustate().equals(other.getMenustate()))
+            && (this.getMenuState() == null ? other.getMenuState() == null : this.getMenuState().equals(other.getMenuState()))
             && (this.getIsContainChildren() == null ? other.getIsContainChildren() == null : this.getIsContainChildren().equals(other.getIsContainChildren()));
     }
 
@@ -99,7 +99,7 @@ public class Menu implements Serializable {
         result = prime * result + ((getPathName() == null) ? 0 : getPathName().hashCode());
         result = prime * result + ((getComponentPath() == null) ? 0 : getComponentPath().hashCode());
         result = prime * result + ((getMenuImgClass() == null) ? 0 : getMenuImgClass().hashCode());
-        result = prime * result + ((getMenustate() == null) ? 0 : getMenustate().hashCode());
+        result = prime * result + ((getMenuState() == null) ? 0 : getMenuState().hashCode());
         result = prime * result + ((getIsContainChildren() == null) ? 0 : getIsContainChildren().hashCode());
         return result;
     }
@@ -117,7 +117,7 @@ public class Menu implements Serializable {
         sb.append(", pathName=").append(pathName);
         sb.append(", componentPath=").append(componentPath);
         sb.append(", menuImgClass=").append(menuImgClass);
-        sb.append(", menustate=").append(menustate);
+        sb.append(", menustate=").append(menuState);
         sb.append(", isContainChildren=").append(isContainChildren);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

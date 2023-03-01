@@ -1,5 +1,6 @@
 package com.job.modules.Login.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.job.common.domain.Login.UserDetailsImpl;
 import com.job.common.domain.Result;
@@ -11,13 +12,12 @@ import com.job.entities.Amount;
 import com.job.entities.Company;
 import com.job.entities.Resume;
 import com.job.entities.Student;
-import com.job.mapper.AmountMapper;
-import com.job.mapper.CompanyMapper;
-import com.job.mapper.ResumeMapper;
-import com.job.mapper.StudentMapper;
+import com.job.mapper.*;
 import com.job.modules.Login.dto.CompanyRegister;
 import com.job.modules.Login.dto.StudentRegister;
 import com.job.modules.Login.service.LoginService;
+import com.job.modules.Login.service.MenuService;
+import com.job.modules.Login.vo.MenuItemVo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,6 +41,8 @@ public class LoginServiceImpl implements LoginService {
     private ResumeMapper resumeMapper;
     @Autowired
     private CompanyMapper companyMapper;
+    @Autowired
+    private MenuMapper menuMapper;
 
     @Override
     public HashMap<String, Object> login(Amount amount) {
@@ -52,6 +54,7 @@ public class LoginServiceImpl implements LoginService {
         }
         // 如果通过认证，就jwt生成token并返回
         UserDetailsImpl principal = (UserDetailsImpl) authenticate.getPrincipal(); // 含有用户信息，用户角色等的认证信息
+        // 账户信息
         Amount loginUser = principal.getAmount();
         String jwt;
         try {
@@ -68,16 +71,48 @@ public class LoginServiceImpl implements LoginService {
             throw new SystemException(Code.SYSTEM_ERR, "生成TOKEN失败，请稍后再试");
         }
 
+        // 根据用户的roleId获取角色信息
+        List<MenuItemVo> topMenuList = menuMapper.getTopMenuList(loginUser.getRoleId());
+
         // 将信息塞入响应体
         HashMap<String, Object> res = new HashMap<>();
         res.put("token",jwt);
+        res.put("menuInfo",topMenuList);
         loginUser.setPassword("");
         res.put("userInfo",loginUser);
         return res;
     }
 
+
+    /**
+     * 新增用户时判断用户是否已经存在
+     * @param username
+     * @return false:不存在，true:已存在
+     */
+    public Boolean checkAmountAvailibe(String username){
+        LambdaQueryWrapper<Amount> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Amount::getUsername,username);
+        Amount already = amountMapper.selectOne(queryWrapper);
+        if(already == null){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 用户注册，学生用户的处理逻辑
+     * @param stuInfo
+     * @return
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
     @Override
     public Result studentRegister(StudentRegister stuInfo) throws InvocationTargetException, IllegalAccessException {
+//        判断用户是否存在
+        if(checkAmountAvailibe(stuInfo.getUsername())){
+            throw new BusinessException(Code.BUSINESS_ERR,"用户已存在，请输入新账号");
+        }
+
 //        插入新账号
         Amount amount = new Amount();
         BeanUtils.copyProperties(amount,stuInfo);
@@ -131,8 +166,19 @@ public class LoginServiceImpl implements LoginService {
          */
     }
 
+    /**
+     * 用户注册，企业用户的处理逻辑
+     * @param compInfo
+     * @return
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
     @Override
     public Result companyRegister(CompanyRegister compInfo) throws InvocationTargetException, IllegalAccessException {
+        //        判断用户是否存在
+        if(checkAmountAvailibe(compInfo.getUsername())){
+            throw new BusinessException(Code.BUSINESS_ERR,"用户已存在，请输入新账号");
+        }
 //        插入新账户
         Amount amount = new Amount();
         BeanUtils.copyProperties(amount,compInfo);

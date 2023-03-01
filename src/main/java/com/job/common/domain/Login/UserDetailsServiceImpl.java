@@ -25,9 +25,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (Objects.isNull(amount)) {
             throw new BusinessException(Code.BUSINESS_ERR, "用户名错误，请重新输入！");
         }
-        String role = "0";
-        if(!String.valueOf(amount.getRoleId()).equals("")){
-            role = amount.getRoleId().toString();
+        Integer role = 0;
+        if(amount.getRoleId() != null){
+            role = amount.getRoleId();
         }
         // 需要返回UserDetails类型的对象
         return new UserDetailsImpl(amount,role);

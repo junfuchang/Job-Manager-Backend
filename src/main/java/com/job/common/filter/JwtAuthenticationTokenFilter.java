@@ -1,6 +1,8 @@
 package com.job.common.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.job.common.enums.Code;
+import com.job.common.exception.BusinessException;
 import com.job.common.utils.JwtUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -39,6 +41,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(tokenInfo,null,authorities);
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }catch (Exception e){
+//            该错误不会被RestController拦截掉，所以将会在控制台抛出异常，我就不将它显示出来了
 //            throw new BusinessException(Code.BUSINESS_ERR,"token非法或者已过期，请重新登陆。");
         }
         filterChain.doFilter(request,response);
