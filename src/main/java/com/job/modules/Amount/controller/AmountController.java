@@ -1,21 +1,28 @@
 package com.job.modules.Amount.controller;
 
 import com.job.common.domain.Result;
-import com.job.modules.Amount.service.impl.AmountServiceImpl;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import com.job.entities.Amount;
+import com.job.mapper.AmountMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
 @RestController
 @RequestMapping("/amount")
 public class AmountController {
+
+    @Autowired
+    AmountMapper amountMapper;
+
+    @PostMapping("/getAmountList")
+    @PostAuthorize("@Permission.access('ADMIN')")
+    public Result getAmountList(){
+
+        return new Result(amountMapper.selectList(null));
+    }
+
+
 
 //    @Autowired
 //    UserMapper userMapper;
@@ -63,11 +70,5 @@ public class AmountController {
 ////        return new Result(userService.getUserById(id));
 ////    }
 //
-//    @ApiOperation("获取全部用户")
-//    @PostMapping("/getUserBySearch")
-//    @PostAuthorize("@role.isAllow('ADMIN')")
-//    public Result getUserBySearch(@RequestBody HashMap data){
-////        System.out.println("hash:  "+data);
-//        return new Result(userService.getUserBySearch(data));
-//    }
+
 }

@@ -40,6 +40,7 @@
         SELECT
             rm.menu_id as menu_id,
             m.parent_id,
+            m.menu_url,
             m.menu_name,
             m.path_name,
             m.component_path,
