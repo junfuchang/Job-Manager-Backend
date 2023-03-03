@@ -12,7 +12,10 @@ import java.util.HashMap;
 @Transactional
 public interface LoginService {
     HashMap login(Amount user);
-
     Result studentRegister(StudentRegister studentRegister) throws InvocationTargetException, IllegalAccessException;
     Result companyRegister(CompanyRegister companyRegister) throws InvocationTargetException, IllegalAccessException;
+    /**
+     * 暴露出去用于检查用户名是否已经存在
+     */
+    Boolean checkAmountAvailable(String username);
 }

@@ -7,6 +7,7 @@ import com.job.common.domain.Result;
 import com.job.common.enums.Code;
 import com.job.common.exception.BusinessException;
 import com.job.common.exception.SystemException;
+import com.job.common.utils.EncodeUtils;
 import com.job.common.utils.JwtUtils;
 import com.job.entities.Amount;
 import com.job.entities.Company;
@@ -16,7 +17,6 @@ import com.job.mapper.*;
 import com.job.modules.Login.dto.CompanyRegister;
 import com.job.modules.Login.dto.StudentRegister;
 import com.job.modules.Login.service.LoginService;
-import com.job.modules.Login.service.MenuService;
 import com.job.modules.Login.vo.MenuItemVo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,7 +89,7 @@ public class LoginServiceImpl implements LoginService {
      * @param username
      * @return false:不存在，true:已存在
      */
-    public Boolean checkAmountAvailibe(String username){
+    public Boolean checkAmountAvailable(String username){
         LambdaQueryWrapper<Amount> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Amount::getUsername,username);
         Amount already = amountMapper.selectOne(queryWrapper);
@@ -109,13 +109,14 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public Result studentRegister(StudentRegister stuInfo) throws InvocationTargetException, IllegalAccessException {
 //        判断用户是否存在
-        if(checkAmountAvailibe(stuInfo.getUsername())){
+        if(checkAmountAvailable(stuInfo.getUsername())){
             throw new BusinessException(Code.BUSINESS_ERR,"用户已存在，请输入新账号");
         }
 
 //        插入新账号
         Amount amount = new Amount();
         BeanUtils.copyProperties(amount,stuInfo);
+        amount.setPassword(EncodeUtils.encode(stuInfo.getPassword()));
         amountMapper.insert(amount);
 //        插入新简历
         Resume resume = new Resume();
@@ -176,12 +177,13 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public Result companyRegister(CompanyRegister compInfo) throws InvocationTargetException, IllegalAccessException {
         //        判断用户是否存在
-        if(checkAmountAvailibe(compInfo.getUsername())){
+        if(checkAmountAvailable(compInfo.getUsername())){
             throw new BusinessException(Code.BUSINESS_ERR,"用户已存在，请输入新账号");
         }
 //        插入新账户
         Amount amount = new Amount();
         BeanUtils.copyProperties(amount,compInfo);
+        amount.setPassword(EncodeUtils.encode(compInfo.getPassword()));
         amountMapper.insert(amount);
 //        插入新公司
         Company company = new Company();

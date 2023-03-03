@@ -25,12 +25,12 @@ public class LoginController {
         return new Result(loginService.login(amount));
     }
 
-    @PostMapping(value = {"/stu-register"})
+    @PostMapping(value = {"/studentRegister"})
     public Result stuRegister(@RequestBody StudentRegister stuInfo) throws InvocationTargetException, IllegalAccessException {
         return loginService.studentRegister(stuInfo);
     }
 
-    @PostMapping(value = {"/comp-register"})
+    @PostMapping(value = {"/companyRegister"})
     public Result companyRegister(@RequestBody CompanyRegister compInfo) throws InvocationTargetException, IllegalAccessException {
         return loginService.companyRegister(compInfo);
     }
