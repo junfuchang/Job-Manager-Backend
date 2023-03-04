@@ -48,6 +48,7 @@
             m.path_name,
             m.component_path,
             m.menu_state,
+            m.menu_img_class,
             m.is_contain_children
         FROM role_menu rm
                  LEFT JOIN menu m ON (rm.menu_id = m.menu_id)
@@ -83,5 +84,6 @@
         select *
         from menu
         WHERE parent_id = 0
+        order by menu_order
     </select>
 </mapper>
