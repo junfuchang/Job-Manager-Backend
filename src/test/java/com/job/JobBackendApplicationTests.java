@@ -1,7 +1,7 @@
 package com.job;
 
 import com.job.mapper.AmountMapper;
-import com.job.modules.Login.service.MenuService;
+import com.job.modules.Menu.service.MenuService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

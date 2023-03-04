@@ -62,6 +62,11 @@ public class Menu implements Serializable {
      */
     private Integer isContainChildren;
 
+    /**
+     * 菜单排序
+     */
+    private Integer menuOrder;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 

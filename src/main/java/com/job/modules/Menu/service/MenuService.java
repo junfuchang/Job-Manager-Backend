@@ -1,8 +1,10 @@
-package com.job.modules.Login.service;
+package com.job.modules.Menu.service;
 
+import com.job.common.domain.Result;
 import com.job.entities.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.job.modules.Login.vo.MenuItemVo;
+import com.job.modules.Menu.dto.UpdateMenuDto;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -16,4 +18,7 @@ import java.util.List;
 @Transactional
 public interface MenuService extends IService<Menu> {
     List<MenuItemVo> getSonMenu(Integer parentId);
+    Result selectMenuList(Integer parentId);
+
+    Result updateMenu(UpdateMenuDto updateMenuDto);
 }
