@@ -25,12 +25,28 @@
             <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
     </resultMap>
 
-    <sql id="Base_Column_List">
-        student_id,amount_id,major_id,
-        resumer_id,gender,contact,
-        address,graduate_flag,direction,
-        avatar,date,degree,
-        salary,industry,post,
-        remark,birthday,delete_flag
-    </sql>
+    <select id="selectStudentList">
+        SELECT
+            s.student_id,
+            s.`name`,
+            s.avatar,
+            m.`name` AS major_name,
+            a.amount_id,
+            a.username,
+            s.gender,
+            s.remark,
+            s.contact,
+            s.address,
+            s.birthday,
+            s.graduate_flag,
+            s.date,
+            s.degree,
+            s.industry,
+            s.post,
+            s.salary
+        FROM student s
+        LEFT JOIN amount a ON a.amount_id = s.amount_id
+        LEFT JOIN resume r ON s.student_id = r.resumer_id
+        LEFT JOIN major m ON m.major_id = s.major_id
+    </select>
 </mapper>

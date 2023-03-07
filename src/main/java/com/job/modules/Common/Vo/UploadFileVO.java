@@ -1,4 +1,4 @@
-package com.job.modules.Common.Vo;
+package com.job.modules.Common.vo;
 
 import lombok.Data;
 

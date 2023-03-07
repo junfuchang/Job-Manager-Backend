@@ -98,6 +98,24 @@ public class LoginServiceImpl implements LoginService {
         }
         return true;
     }
+    public Boolean checkStudentAvailable(Integer studentId){
+        LambdaQueryWrapper<Student> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Student::getStudentId,studentId);
+        Student already = studentMapper.selectOne(queryWrapper);
+        if(already == null){
+            return false;
+        }
+        return true;
+    }
+    public Boolean checkCompanyAvailable(Integer companyId){
+        LambdaQueryWrapper<Company> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Company::getCompanyId,companyId);
+        Company already = companyMapper.selectOne(queryWrapper);
+        if(already == null){
+            return false;
+        }
+        return true;
+    }
 
     /**
      * 用户注册，学生用户的处理逻辑
@@ -111,6 +129,9 @@ public class LoginServiceImpl implements LoginService {
 //        判断用户是否存在
         if(checkAmountAvailable(stuInfo.getUsername())){
             throw new BusinessException(Code.BUSINESS_ERR,"用户已存在，请输入新账号");
+        }
+        if(checkStudentAvailable(stuInfo.getStudentId())){
+            throw new BusinessException(Code.BUSINESS_ERR,"学号已存在，请联系管理员");
         }
 
 //        插入新账号
@@ -180,6 +201,10 @@ public class LoginServiceImpl implements LoginService {
         if(checkAmountAvailable(compInfo.getUsername())){
             throw new BusinessException(Code.BUSINESS_ERR,"用户已存在，请输入新账号");
         }
+        if(checkCompanyAvailable(compInfo.getCode())){
+            throw new BusinessException(Code.BUSINESS_ERR,"社会信用代码已存在，请联系管理员");
+        }
+        
 //        插入新账户
         Amount amount = new Amount();
         BeanUtils.copyProperties(amount,compInfo);

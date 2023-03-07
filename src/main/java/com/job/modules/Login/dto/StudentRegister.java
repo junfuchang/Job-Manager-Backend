@@ -21,7 +21,7 @@ public class StudentRegister {
     /**
      * 学号
      */
-    private String studentId;
+    private Integer studentId;
     /**
      * 专业ID
      */

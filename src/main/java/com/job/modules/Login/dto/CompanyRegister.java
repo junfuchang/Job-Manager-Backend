@@ -17,9 +17,13 @@ public class CompanyRegister {
      */
     private String name;
     /**
+     * 公司类型
+     */
+    private String type;
+    /**
      * 社会信用代码
      */
-    private String code;
+    private Integer code;
     /**
      * 联系方式（手机号）
      */

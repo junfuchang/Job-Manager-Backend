@@ -18,6 +18,13 @@ security:
     issuer: CHANGJUNFU # 签发者
     name: Token # 名称
 
+aliyun:
+  endpoint: oss-cn-hangzhou.aliyuncs.com
+  accessKeyId: LTAI4G6DTJsopnxiPSvPYbZn
+  accessKeySecret: wRlcJ2hRmALRTwKly0t4IKvEag0Hgh
+  bucketName: job-manager-junfuchang
+  urlPrefix: https://job-manager-junfuchang.oss-cn-hangzhou.aliyuncs.com/
+
 ---
 #开发环境
 spring:
