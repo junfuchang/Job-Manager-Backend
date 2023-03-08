@@ -8,9 +8,11 @@ import com.job.entities.Student;
 import com.job.modules.Student.dto.StudentListDto;
 import com.job.modules.Student.service.StudentService;
 import com.job.mapper.StudentMapper;
+import com.job.modules.Student.vo.StudentListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
 * @author cjf
@@ -31,23 +33,26 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
         if(current == null || pageSize == null){
             return new Result(200,studentMapper.selectList(null),"无分页参数，返回全部数据");
         }{
-            LambdaQueryWrapper<Student> queryWrapper = new LambdaQueryWrapper<>();
+            HashMap<String, Object> map = new HashMap<>();
+
             if(studentListDto.getStudentId() != null ){
-                queryWrapper.eq(Student::getStudentId,studentListDto.getStudentId());
+                map.put("studentId",studentListDto.getStudentId());
             }
             if(studentListDto.getName() != null ){
-                queryWrapper.like(Student::getName,studentListDto.getName());
+                map.put("name",studentListDto.getName());
             }
             if(studentListDto.getMajorId() != null && studentListDto.getMajorId() != -1){
-//                queryWrapper.eq(Student::get,studentListDto.getRoleId());
+                map.put("majorId",studentListDto.getMajorId());
             }
-            if(studentListDto.getBirthday() != null ){
-                Date birthday = studentListDto.getBirthday();  //  Tue Mar 07 17:34:23 CST 2023
-//                queryWrapper.between(Student::getBirthday, DateUtils.getStartTime(createTime),DateUtils.getEndTime(createTime));
+            if(studentListDto.getGraduateFlag() != null && studentListDto.getGraduateFlag() != -1){
+                map.put("graduateFlag",studentListDto.getGraduateFlag());
             }
 
-            Page<Student> data = studentMapper.selectPage(new Page<>(studentListDto.getCurrent(), pageSize), queryWrapper);
+            Page<StudentListVo> data = studentMapper.selectStudentList(new Page<>(current, pageSize),map);
             return new Result(data);
+
+
+
         }
     }
 }

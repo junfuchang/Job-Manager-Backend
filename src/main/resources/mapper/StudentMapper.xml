@@ -8,7 +8,7 @@
             <id property="studentId" column="student_id" jdbcType="INTEGER"/>
             <id property="amountId" column="amount_id" jdbcType="INTEGER"/>
             <id property="majorId" column="major_id" jdbcType="INTEGER"/>
-            <id property="resumerId" column="resumer_id" jdbcType="INTEGER"/>
+            <id property="resumeId" column="resume_id" jdbcType="INTEGER"/>
             <result property="gender" column="gender" jdbcType="INTEGER"/>
             <result property="contact" column="contact" jdbcType="VARCHAR"/>
             <result property="address" column="address" jdbcType="VARCHAR"/>
@@ -25,7 +25,7 @@
             <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
     </resultMap>
 
-    <select id="selectStudentList">
+    <select id="selectStudentList" parameterType="hashmap" resultType="com.job.modules.Student.vo.StudentListVo">
         SELECT
             s.student_id,
             s.`name`,
@@ -46,7 +46,21 @@
             s.salary
         FROM student s
         LEFT JOIN amount a ON a.amount_id = s.amount_id
-        LEFT JOIN resume r ON s.student_id = r.resumer_id
+        LEFT JOIN resume r ON s.student_id = r.resume_id
         LEFT JOIN major m ON m.major_id = s.major_id
+        <where>
+            <if test="map.studentId != null">
+                and s.student_id = #{map.studentId}
+            </if>
+            <if test="map.name != null">
+                and s.`name` like concat('%',#{map.name},'%')
+            </if>
+            <if test="map.majorId != null and map.majorId != -1">
+                and s.major_id = #{map.majorId}
+            </if>
+            <if test="map.graduateFlag != null and map.graduateFlag != -1">
+                and s.graduate_flag = #{map.graduateFlag}
+            </if>
+        </where>
     </select>
 </mapper>

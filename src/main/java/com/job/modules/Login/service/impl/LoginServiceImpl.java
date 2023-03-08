@@ -147,7 +147,7 @@ public class LoginServiceImpl implements LoginService {
 //        插入新学生信息
         Student student = new Student();
         BeanUtils.copyProperties(student,stuInfo);
-        student.setResumerId(resume.getResumerId());
+        student.setResumeId(resume.getResumerId());
         student.setAmountId(amount.getAmountId());
         studentMapper.insert(student);
 

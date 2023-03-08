@@ -32,7 +32,7 @@ public class Student implements Serializable {
     /**
      * 简历ID
      */
-    private Integer resumerId;
+    private Integer resumeId;
 
     /**
      * 姓名
@@ -128,7 +128,7 @@ public class Student implements Serializable {
         return (this.getStudentId() == null ? other.getStudentId() == null : this.getStudentId().equals(other.getStudentId()))
             && (this.getAmountId() == null ? other.getAmountId() == null : this.getAmountId().equals(other.getAmountId()))
             && (this.getMajorId() == null ? other.getMajorId() == null : this.getMajorId().equals(other.getMajorId()))
-            && (this.getResumerId() == null ? other.getResumerId() == null : this.getResumerId().equals(other.getResumerId()))
+            && (this.getResumeId() == null ? other.getResumeId() == null : this.getResumeId().equals(other.getResumeId()))
             && (this.getGender() == null ? other.getGender() == null : this.getGender().equals(other.getGender()))
             && (this.getContact() == null ? other.getContact() == null : this.getContact().equals(other.getContact()))
             && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
@@ -152,7 +152,7 @@ public class Student implements Serializable {
         result = prime * result + ((getStudentId() == null) ? 0 : getStudentId().hashCode());
         result = prime * result + ((getAmountId() == null) ? 0 : getAmountId().hashCode());
         result = prime * result + ((getMajorId() == null) ? 0 : getMajorId().hashCode());
-        result = prime * result + ((getResumerId() == null) ? 0 : getResumerId().hashCode());
+        result = prime * result + ((getResumeId() == null) ? 0 : getResumeId().hashCode());
         result = prime * result + ((getGender() == null) ? 0 : getGender().hashCode());
         result = prime * result + ((getContact() == null) ? 0 : getContact().hashCode());
         result = prime * result + ((getAddress() == null) ? 0 : getAddress().hashCode());
@@ -179,7 +179,7 @@ public class Student implements Serializable {
         sb.append(", studentId=").append(studentId);
         sb.append(", amountId=").append(amountId);
         sb.append(", majorId=").append(majorId);
-        sb.append(", resumerId=").append(resumerId);
+        sb.append(", resumerId=").append(resumeId);
         sb.append(", gender=").append(gender);
         sb.append(", contact=").append(contact);
         sb.append(", address=").append(address);
