@@ -16,7 +16,7 @@ public class Resume implements Serializable {
      * 简历编号
      */
     @TableId(type = IdType.AUTO)
-    private Integer resumerId;
+    private Integer resumeId;
 
     /**
      * 姓名
@@ -54,7 +54,7 @@ public class Resume implements Serializable {
             return false;
         }
         Resume other = (Resume) that;
-        return (this.getResumerId() == null ? other.getResumerId() == null : this.getResumerId().equals(other.getResumerId()))
+        return (this.getResumeId() == null ? other.getResumeId() == null : this.getResumeId().equals(other.getResumeId()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getAge() == null ? other.getAge() == null : this.getAge().equals(other.getAge()))
             && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
@@ -65,7 +65,7 @@ public class Resume implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getResumerId() == null) ? 0 : getResumerId().hashCode());
+        result = prime * result + ((getResumeId() == null) ? 0 : getResumeId().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getAge() == null) ? 0 : getAge().hashCode());
         result = prime * result + ((getRemark() == null) ? 0 : getRemark().hashCode());
@@ -79,7 +79,7 @@ public class Resume implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", resumerId=").append(resumerId);
+        sb.append(", resumerId=").append(resumeId);
         sb.append(", name=").append(name);
         sb.append(", age=").append(age);
         sb.append(", remark=").append(remark);

@@ -12,4 +12,6 @@ import com.job.modules.Student.dto.StudentListDto;
 */
 public interface StudentService extends IService<Student> {
     Result selectAmountList(StudentListDto studentListDto);
+
+    Result updateStudent(Student student);
 }

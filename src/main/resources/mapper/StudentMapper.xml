@@ -4,35 +4,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.job.mapper.StudentMapper">
 
-    <resultMap id="BaseResultMap" type="com.job.entities.Student">
-            <id property="studentId" column="student_id" jdbcType="INTEGER"/>
-            <id property="amountId" column="amount_id" jdbcType="INTEGER"/>
-            <id property="majorId" column="major_id" jdbcType="INTEGER"/>
-            <id property="resumeId" column="resume_id" jdbcType="INTEGER"/>
-            <result property="gender" column="gender" jdbcType="INTEGER"/>
-            <result property="contact" column="contact" jdbcType="VARCHAR"/>
-            <result property="address" column="address" jdbcType="VARCHAR"/>
-            <result property="graduateFlag" column="graduate_flag" jdbcType="INTEGER"/>
-            <result property="direction" column="direction" jdbcType="INTEGER"/>
-            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
-            <result property="date" column="date" jdbcType="TIMESTAMP"/>
-            <result property="degree" column="degree" jdbcType="INTEGER"/>
-            <result property="salary" column="salary" jdbcType="INTEGER"/>
-            <result property="industry" column="industry" jdbcType="VARCHAR"/>
-            <result property="post" column="post" jdbcType="VARCHAR"/>
-            <result property="remark" column="remark" jdbcType="VARCHAR"/>
-            <result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
-            <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
-    </resultMap>
-
     <select id="selectStudentList" parameterType="hashmap" resultType="com.job.modules.Student.vo.StudentListVo">
         SELECT
             s.student_id,
             s.`name`,
             s.avatar,
             m.`name` AS major_name,
+            m.major_id,
+            c.college_id AS college_Id,
             a.amount_id,
             a.username,
+            s.resume_id,
             s.gender,
             s.remark,
             s.contact,
@@ -43,11 +25,15 @@
             s.degree,
             s.industry,
             s.post,
-            s.salary
+            s.salary,
+            s.city,
+            s.industry,
+            s.direction
         FROM student s
         LEFT JOIN amount a ON a.amount_id = s.amount_id
         LEFT JOIN resume r ON s.student_id = r.resume_id
         LEFT JOIN major m ON m.major_id = s.major_id
+        LEFT JOIN college c on m.college_id = c.college_id
         <where>
             <if test="map.studentId != null">
                 and s.student_id = #{map.studentId}
@@ -63,4 +49,5 @@
             </if>
         </where>
     </select>
+
 </mapper>

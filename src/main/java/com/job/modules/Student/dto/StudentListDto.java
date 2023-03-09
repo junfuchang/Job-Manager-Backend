@@ -11,6 +11,4 @@ public class StudentListDto extends Student {
     private Integer current ;
     private  Integer pageSize ;
 
-
-
 }

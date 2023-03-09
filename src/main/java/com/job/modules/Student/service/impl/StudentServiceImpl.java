@@ -1,6 +1,5 @@
 package com.job.modules.Student.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.job.common.domain.Result;
@@ -11,7 +10,7 @@ import com.job.mapper.StudentMapper;
 import com.job.modules.Student.vo.StudentListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Date;
+
 import java.util.HashMap;
 
 /**
@@ -34,7 +33,6 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
             return new Result(200,studentMapper.selectList(null),"无分页参数，返回全部数据");
         }{
             HashMap<String, Object> map = new HashMap<>();
-
             if(studentListDto.getStudentId() != null ){
                 map.put("studentId",studentListDto.getStudentId());
             }
@@ -47,13 +45,15 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
             if(studentListDto.getGraduateFlag() != null && studentListDto.getGraduateFlag() != -1){
                 map.put("graduateFlag",studentListDto.getGraduateFlag());
             }
-
             Page<StudentListVo> data = studentMapper.selectStudentList(new Page<>(current, pageSize),map);
             return new Result(data);
-
-
-
         }
+    }
+
+    @Override
+    public Result updateStudent(Student student) {
+        studentMapper.updateById(student);
+        return new Result(true);
     }
 }
 

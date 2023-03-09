@@ -141,13 +141,13 @@ public class LoginServiceImpl implements LoginService {
         amountMapper.insert(amount);
 //        插入新简历
         Resume resume = new Resume();
-        resume.setResumerId(amount.getAmountId());
+        resume.setResumeId(amount.getAmountId());
         resume.setName(stuInfo.getName());
         resumeMapper.insert(resume);
 //        插入新学生信息
         Student student = new Student();
         BeanUtils.copyProperties(student,stuInfo);
-        student.setResumeId(resume.getResumerId());
+        student.setResumeId(resume.getResumeId());
         student.setAmountId(amount.getAmountId());
         studentMapper.insert(student);
 

@@ -105,6 +105,11 @@ public class Student implements Serializable {
     private Date birthday;
 
     /**
+     * 毕业城市
+     */
+    private String city;
+
+    /**
      * 删除标识
      */
     @TableLogic(value = "0" ,delval = "1")

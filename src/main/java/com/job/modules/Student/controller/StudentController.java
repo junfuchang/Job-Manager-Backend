@@ -2,6 +2,7 @@ package com.job.modules.Student.controller;
 
 
 import com.job.common.domain.Result;
+import com.job.entities.Student;
 import com.job.modules.Student.dto.StudentListDto;
 import com.job.modules.Student.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +21,10 @@ public class StudentController {
     @PostMapping("/selectStudentList")
      public Result selectStudentList(@RequestBody StudentListDto studentListDto){
         return studentService.selectAmountList(studentListDto);
+    }
+
+    @PostMapping("/updateStudent")
+    public Result updateStudent(@RequestBody Student student){
+        return studentService.updateStudent(student);
     }
 }

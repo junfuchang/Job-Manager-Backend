@@ -9,5 +9,6 @@ public class StudentListVo extends Student {
     private String majorName;
     private String username;
     private Integer amountId;
-
+    private Integer majorId;
+    private Integer collegeId;
 }
