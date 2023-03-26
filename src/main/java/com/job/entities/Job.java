@@ -70,9 +70,9 @@ public class Job implements Serializable {
     private String type;
 
     /**
-     * 宣传图
+     * 岗位介绍
      */
-    private String pic;
+    private String intro;
 
     /**
      * 删除标识
@@ -106,7 +106,7 @@ public class Job implements Serializable {
             && (this.getSalary() == null ? other.getSalary() == null : this.getSalary().equals(other.getSalary()))
             && (this.getOpenFlag() == null ? other.getOpenFlag() == null : this.getOpenFlag().equals(other.getOpenFlag()))
             && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
-            && (this.getPic() == null ? other.getPic() == null : this.getPic().equals(other.getPic()))
+            && (this.getIntro() == null ? other.getIntro() == null : this.getIntro().equals(other.getIntro()))
             && (this.getDeleteFlag() == null ? other.getDeleteFlag() == null : this.getDeleteFlag().equals(other.getDeleteFlag()));
     }
 
@@ -125,7 +125,7 @@ public class Job implements Serializable {
         result = prime * result + ((getSalary() == null) ? 0 : getSalary().hashCode());
         result = prime * result + ((getOpenFlag() == null) ? 0 : getOpenFlag().hashCode());
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
-        result = prime * result + ((getPic() == null) ? 0 : getPic().hashCode());
+        result = prime * result + ((getIntro() == null) ? 0 : getIntro().hashCode());
         result = prime * result + ((getDeleteFlag() == null) ? 0 : getDeleteFlag().hashCode());
         return result;
     }
@@ -147,7 +147,7 @@ public class Job implements Serializable {
         sb.append(", salary=").append(salary);
         sb.append(", openFlag=").append(openFlag);
         sb.append(", type=").append(type);
-        sb.append(", pic=").append(pic);
+        sb.append(", pic=").append(intro);
         sb.append(", deleteFlag=").append(deleteFlag);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

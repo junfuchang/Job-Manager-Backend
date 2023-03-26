@@ -1,6 +1,5 @@
 package com.job.modules.Student.vo;
 
-import com.job.entities.Resume;
 import com.job.entities.Student;
 import lombok.Data;
 

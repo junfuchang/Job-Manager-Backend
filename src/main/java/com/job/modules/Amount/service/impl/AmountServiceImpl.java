@@ -1,6 +1,5 @@
 package com.job.modules.Amount.service.impl;
 
-import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.job.common.domain.MyPage;
@@ -13,7 +12,6 @@ import com.job.entities.*;
 import com.job.mapper.*;
 import com.job.modules.Amount.dto.AmountListDto;
 import com.job.modules.Amount.service.AmountService;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.job.modules.Login.service.LoginService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +37,11 @@ public class AmountServiceImpl extends ServiceImpl<AmountMapper, Amount>
     @Autowired
     StudentMapper studentMapper;
     @Autowired
-    ResumeMapper resumeMapper;
-    @Autowired
     CompanyMapper companyMapper;
     @Autowired
     JobMapper jobMapper;
     @Autowired
-    JobResumeMapper jobResumeMapper;
+    JobStudentMapper jobStudentMapper;
 
 
 
@@ -97,24 +93,22 @@ public class AmountServiceImpl extends ServiceImpl<AmountMapper, Amount>
         if(amountListDto.getAmountId() == null){
             throw new BusinessException(Code.BUSINESS_ERR,"删除账户需要传入账户ID");
         }
-        if(amountListDto.getRoleId() == 0){
-            // 删除学生信息及简历
+        Amount amount = amountMapper.selectById(amountListDto.getAmountId());
+
+        System.out.println("\n\n================\n\n");
+        if(amount.getRoleId() == 0){
+            // 删除学生信息
             LambdaQueryWrapper<Student> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(Student::getAmountId,amountListDto.getAmountId());
-            Student student = studentMapper.selectById(queryWrapper);
-            if(student.getResumeId() != null){
-                LambdaQueryWrapper<Resume> resume = new LambdaQueryWrapper<>();
-                resume.eq(Resume::getResumeId,student.getResumeId());
-                resumeMapper.delete(resume);
-            }
+            Student student = studentMapper.selectOne(queryWrapper);
             studentMapper.deleteById(student);
         }
 
-        if(amountListDto.getRoleId() == 1){
+        if(amount.getRoleId() == 1){
             // 找出公司
             LambdaQueryWrapper<Company> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(Company::getAmountId,amountListDto.getAmountId());
-            Company company = companyMapper.selectById(queryWrapper);
+            Company company = companyMapper.selectOne(queryWrapper);
             // 找出公司的岗位
             LambdaQueryWrapper<Job> jobWrapper = new LambdaQueryWrapper<>();
             jobWrapper.eq(Job::getCompanyId,company.getCompanyId());
@@ -123,17 +117,18 @@ public class AmountServiceImpl extends ServiceImpl<AmountMapper, Amount>
             for (Job job:jobs
                  ) {
                 // 删除工作简历之间的关联
-                LambdaQueryWrapper<JobResume> jobResumeWrapper = new LambdaQueryWrapper<>();
-                jobResumeWrapper.eq(JobResume::getJobId,job.getJobId());
-                List<JobResume> jobResumes = jobResumeMapper.selectList(jobResumeWrapper);
-                for (JobResume jobResume: jobResumes
+                LambdaQueryWrapper<JobStudent> wrapper = new LambdaQueryWrapper<>();
+                wrapper.eq(JobStudent::getJobId,job.getJobId());
+                List<JobStudent> jobStudents = jobStudentMapper.selectList(wrapper);
+                for (JobStudent jobStudent : jobStudents
                      ) {
-                    jobResumeMapper.deleteById(jobResume);
+                    jobStudentMapper.deleteById(jobStudent);
                 }
-                jobResumeMapper.deleteById(job);
+                jobMapper.deleteById(job);
             }
             companyMapper.deleteById(company);
         }
+
         amountMapper.deleteById(amountListDto.getAmountId());
         return new Result();
     }

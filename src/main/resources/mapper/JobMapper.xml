@@ -16,15 +16,52 @@
             <result property="salary" column="salary" jdbcType="VARCHAR"/>
             <result property="openFlag" column="open_flag" jdbcType="INTEGER"/>
             <result property="type" column="type" jdbcType="VARCHAR"/>
-            <result property="pic" column="pic" jdbcType="VARCHAR"/>
+            <result property="intro" column="pic" jdbcType="VARCHAR"/>
             <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
     </resultMap>
 
-    <sql id="Base_Column_List">
-        job_id,company_id,title,
-        create_time,deadline,claim,
-        contact,address,salary,
-        open_flag,type,pic,
-        delete_flag
-    </sql>
+
+    <select id="selectJobList" resultType="com.job.modules.Job.vo.JobListVo">
+        SELECT
+            j.`job_id`,
+            j.`company_id`,
+            j.`open_flag`,
+            c.`name`,
+            j.`title`,
+            j.`intro`,
+            j.`claim`,
+            j.`deadline`,
+            j.`contact`,
+            j.`address`,
+            j.`salary`,
+            j.`type`,
+            c.`type` as company_type,
+            c.`website`,
+            c.`remark`,
+            c.`pic`
+        FROM job j
+        LEFT JOIN company c ON c.`company_id` = j.`company_id`
+        <where>
+            j.`delete_flag` = 0
+            <if test="map.title != null">
+                and j.`title` like concat('%',#{map.title},'%')
+            </if>
+            <if test="map.name != null">
+                and c.`name` like concat('%',#{map.name},'%')
+            </if>
+            <if test="map.jobId != null">
+                and j.`job_id` = #{map.jobId}
+            </if>
+            <choose>
+                <when test="map.isOpenAndTimely == null or map.isOpenAndTimely == -1">
+                </when>
+                <when test="map.isOpenAndTimely == 1">
+                    and j.`open_flag` = 1 and (j.`deadline` is null or j.`deadline` > NOW())
+                </when>
+                <otherwise>
+                    and j.`open_flag` = 0 or j.`deadline` is null or j.`deadline` &lt; NOW()
+                </otherwise>
+            </choose>
+        </where>
+    </select>
 </mapper>

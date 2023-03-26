@@ -23,7 +23,7 @@ public class CompanyRegister {
     /**
      * 社会信用代码
      */
-    private Integer code;
+    private String code;
     /**
      * 联系方式（手机号）
      */

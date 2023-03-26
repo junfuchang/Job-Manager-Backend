@@ -14,7 +14,7 @@
             c.college_id AS college_Id,
             a.amount_id,
             a.username,
-            s.resume_id,
+            s.resume,
             s.gender,
             s.remark,
             s.contact,
@@ -31,10 +31,10 @@
             s.direction
         FROM student s
         LEFT JOIN amount a ON a.amount_id = s.amount_id
-        LEFT JOIN resume r ON s.student_id = r.resume_id
         LEFT JOIN major m ON m.major_id = s.major_id
         LEFT JOIN college c on m.college_id = c.college_id
         <where>
+            s.`delete_flag` = 0
             <if test="map.studentId != null">
                 and s.student_id = #{map.studentId}
             </if>

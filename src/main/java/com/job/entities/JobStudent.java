@@ -10,14 +10,14 @@ import lombok.Data;
  * 岗位-简历 关联表
  * @TableName job_resume
  */
-@TableName(value ="job_resume")
+@TableName(value ="job_student")
 @Data
-public class JobResume implements Serializable {
+public class JobStudent implements Serializable {
     /**
      * 岗位-简历表
      */
     @TableId(type = IdType.AUTO)
-    private Integer jobResumeId;
+    private Integer jobStudentId;
 
     /**
      * 外键：岗位ID
@@ -27,7 +27,7 @@ public class JobResume implements Serializable {
     /**
      * 外键：简历ID
      */
-    private Integer resumerId;
+    private Integer studentId;
 
     /**
      * 简历投递时间
@@ -54,10 +54,10 @@ public class JobResume implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        JobResume other = (JobResume) that;
-        return (this.getJobResumeId() == null ? other.getJobResumeId() == null : this.getJobResumeId().equals(other.getJobResumeId()))
+        JobStudent other = (JobStudent) that;
+        return (this.getJobStudentId() == null ? other.getJobStudentId() == null : this.getJobStudentId().equals(other.getJobStudentId()))
             && (this.getJobId() == null ? other.getJobId() == null : this.getJobId().equals(other.getJobId()))
-            && (this.getResumerId() == null ? other.getResumerId() == null : this.getResumerId().equals(other.getResumerId()))
+            && (this.getStudentId() == null ? other.getStudentId() == null : this.getStudentId().equals(other.getStudentId()))
             && (this.getDate() == null ? other.getDate() == null : this.getDate().equals(other.getDate()))
             && (this.getDeleteFlag() == null ? other.getDeleteFlag() == null : this.getDeleteFlag().equals(other.getDeleteFlag()));
     }
@@ -66,9 +66,9 @@ public class JobResume implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getJobResumeId() == null) ? 0 : getJobResumeId().hashCode());
+        result = prime * result + ((getJobStudentId() == null) ? 0 : getJobStudentId().hashCode());
         result = prime * result + ((getJobId() == null) ? 0 : getJobId().hashCode());
-        result = prime * result + ((getResumerId() == null) ? 0 : getResumerId().hashCode());
+        result = prime * result + ((getStudentId() == null) ? 0 : getStudentId().hashCode());
         result = prime * result + ((getDate() == null) ? 0 : getDate().hashCode());
         result = prime * result + ((getDeleteFlag() == null) ? 0 : getDeleteFlag().hashCode());
         return result;
@@ -80,9 +80,9 @@ public class JobResume implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", jobResumeId=").append(jobResumeId);
+        sb.append(", jobResumeId=").append(jobStudentId);
         sb.append(", jobId=").append(jobId);
-        sb.append(", resumerId=").append(resumerId);
+        sb.append(", resumerId=").append(studentId);
         sb.append(", date=").append(date);
         sb.append(", deleteFlag=").append(deleteFlag);
         sb.append(", serialVersionUID=").append(serialVersionUID);

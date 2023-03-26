@@ -11,7 +11,6 @@ import com.job.common.utils.EncodeUtils;
 import com.job.common.utils.JwtUtils;
 import com.job.entities.Amount;
 import com.job.entities.Company;
-import com.job.entities.Resume;
 import com.job.entities.Student;
 import com.job.mapper.*;
 import com.job.modules.Login.dto.CompanyRegister;
@@ -37,8 +36,6 @@ public class LoginServiceImpl implements LoginService {
      private AmountMapper amountMapper;
     @Autowired
     private StudentMapper studentMapper;
-    @Autowired
-    private ResumeMapper resumeMapper;
     @Autowired
     private CompanyMapper companyMapper;
     @Autowired
@@ -71,11 +68,23 @@ public class LoginServiceImpl implements LoginService {
             throw new SystemException(Code.SYSTEM_ERR, "生成TOKEN失败，请稍后再试");
         }
 
-        // 根据用户的roleId获取角色信息
+        // 根据用户的roleId获取菜单信息
         List<MenuItemVo> topMenuList = menuMapper.getTopMenuList(loginUser.getRoleId());
 
         // 将信息塞入响应体
         HashMap<String, Object> res = new HashMap<>();
+        // 放入对应角色的信息
+        if(loginUser.getRoleId() == 0){
+            LambdaQueryWrapper<Student> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(Student::getAmountId,loginUser.getAmountId());
+            Student student = studentMapper.selectOne(queryWrapper);
+            res.put("roleInfo",student);
+        }else if(loginUser.getRoleId() == 1){
+            LambdaQueryWrapper<Company> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(Company::getAmountId,loginUser.getAmountId());
+            Company company = companyMapper.selectOne(queryWrapper);
+            res.put("roleInfo",company);
+        }
         res.put("token",jwt);
         res.put("menuInfo",topMenuList);
         loginUser.setPassword("");
@@ -107,7 +116,7 @@ public class LoginServiceImpl implements LoginService {
         }
         return true;
     }
-    public Boolean checkCompanyAvailable(Integer companyId){
+    public Boolean checkCompanyAvailable(String companyId){
         LambdaQueryWrapper<Company> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Company::getCompanyId,companyId);
         Company already = companyMapper.selectOne(queryWrapper);
@@ -139,15 +148,9 @@ public class LoginServiceImpl implements LoginService {
         BeanUtils.copyProperties(amount,stuInfo);
         amount.setPassword(EncodeUtils.encode(stuInfo.getPassword()));
         amountMapper.insert(amount);
-//        插入新简历
-        Resume resume = new Resume();
-        resume.setResumeId(amount.getAmountId());
-        resume.setName(stuInfo.getName());
-        resumeMapper.insert(resume);
 //        插入新学生信息
         Student student = new Student();
         BeanUtils.copyProperties(student,stuInfo);
-        student.setResumeId(resume.getResumeId());
         student.setAmountId(amount.getAmountId());
         studentMapper.insert(student);
 

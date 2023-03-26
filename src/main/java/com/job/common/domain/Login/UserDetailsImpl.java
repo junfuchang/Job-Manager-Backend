@@ -39,7 +39,6 @@ public class UserDetailsImpl implements UserDetails {
 
     /**
      * 必须重写：用于返回数据库中的密码
-     * @return
      */
     @Override
     public String getPassword() {
@@ -47,7 +46,6 @@ public class UserDetailsImpl implements UserDetails {
     }
     /**
      * 必须重写：用于返回数据库中的用户名
-     * @return
      */
     @Override
     public String getUsername() {

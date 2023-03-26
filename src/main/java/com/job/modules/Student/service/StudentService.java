@@ -11,7 +11,9 @@ import com.job.modules.Student.dto.StudentListDto;
 * @createDate 2023-02-26 23:04:42
 */
 public interface StudentService extends IService<Student> {
+    // 获取学生列表
     Result selectAmountList(StudentListDto studentListDto);
 
+    // 更新学生信息
     Result updateStudent(Student student);
 }

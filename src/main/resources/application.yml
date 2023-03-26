@@ -10,6 +10,8 @@ mybatis-plus:
     banner: false
     db-config:
       id-type: auto
+      logic-not-delete-value: 0  # 代表逻辑未删除
+      logic-delete-value: 1  # 标识逻辑已删除
 
 security:
   jwt:

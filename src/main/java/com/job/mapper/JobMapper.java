@@ -1,8 +1,13 @@
 package com.job.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.job.entities.Job;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.job.modules.Job.vo.JobListVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.HashMap;
 
 /**
 * @author cjf
@@ -12,7 +17,7 @@ import org.apache.ibatis.annotations.Mapper;
 */
 @Mapper
 public interface JobMapper extends BaseMapper<Job> {
-
+    Page<JobListVo> selectJobList(Page<JobListVo> page, @Param("map") HashMap map);
 }
 
 
