@@ -4,4 +4,32 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.job.mapper.JobStudentMapper">
 
+    <select id="selectJobStudentList" resultType="com.job.modules.JobStudent.vo.JobStudentListVo">
+        SELECT
+            js.job_student_id,
+            js.job_id,
+            js.student_id,
+            js.feedback,
+            js.date,
+            s.`name`,
+            s.gender,
+            s.avatar,
+            s.contact,
+            s.birthday,
+            m.`name` AS major,
+            s.resume
+        FROM job_student js
+        LEFT JOIN student s ON js.student_id = s.student_id
+        LEFT JOIN major m ON s.major_id = m.major_id
+        <where>
+            js.delete_flag = 0
+            <if test="map.jobId != null">
+                and js.`job_id` = #{map.jobId}
+            </if>
+            <if test="map.studentId != null">
+                and js.`studentId` = #{map.studentId}
+            </if>
+        </where>
+        ORDER BY js.date DESC
+    </select>
 </mapper>

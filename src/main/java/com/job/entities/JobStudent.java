@@ -35,6 +35,11 @@ public class JobStudent implements Serializable {
     private Date date;
 
     /**
+     * 简历反馈
+     */
+    private Integer feedback;
+
+    /**
      * 删除标识
      */
     @TableLogic(value = "0" ,delval = "1")

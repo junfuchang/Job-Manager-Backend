@@ -1,18 +1,23 @@
 package com.job.modules.JobStudent.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.job.common.domain.Result;
 import com.job.common.enums.Code;
 import com.job.common.exception.BusinessException;
+import com.job.entities.Job;
 import com.job.entities.JobStudent;
 import com.job.mapper.JobStudentMapper;
+import com.job.modules.Job.vo.JobListVo;
 import com.job.modules.JobStudent.dto.JobStudentDto;
 import com.job.modules.JobStudent.service.JobStudentService;
+import com.job.modules.JobStudent.vo.JobStudentListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -63,9 +68,51 @@ public class JobStudentServiceImpl extends ServiceImpl<JobStudentMapper, JobStud
             int delete = jobStudentMapper.deleteById(jobStudent);
         }
 
-        System.out.println("\n\n======"+ jobStudents +"=====\n\n");
+        return new Result(true);
+    }
 
+    @Override
+    public Result selectJobStudentList(JobStudentDto jobStudentDto) {
+        if(jobStudentDto.getJobId() == null && jobStudentDto.getStudentId() == null ){
+            throw new BusinessException(Code.BUSINESS_ERR,"请传入JobId或StudentId参数");
+        }
+        Integer current = jobStudentDto.getCurrent();
+        Integer pageSize = jobStudentDto.getPageSize();
 
+        HashMap<String, Object> hashMap = new HashMap<>();
+        if(jobStudentDto.getJobId() != null){
+            hashMap.put("jobId",jobStudentDto.getJobId());
+        }
+        if(jobStudentDto.getStudentId() != null){
+            hashMap.put("studentId",jobStudentDto.getStudentId());
+        }
+        Page<JobStudentListVo> data = jobStudentMapper.selectJobStudentList(new Page<>(current,pageSize),hashMap);
+        return new Result(data);
+    }
+
+    @Override
+    public Result jobPass(JobStudentDto jobStudentDto) {
+        if(jobStudentDto.getJobStudentId() == null){
+            throw new BusinessException(Code.BUSINESS_ERR,"jobPass接口需要提供jobStudentId");
+        }
+        LambdaQueryWrapper<JobStudent> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(JobStudent::getJobStudentId,jobStudentDto.getJobStudentId());
+        JobStudent jobStudent1 = jobStudentMapper.selectOne(queryWrapper);
+        jobStudent1.setFeedback(2);
+        jobStudentMapper.updateById(jobStudent1);
+        return new Result(true);
+    }
+
+    @Override
+    public Result jobReject(JobStudentDto jobStudentDto) {
+        if(jobStudentDto.getJobStudentId() == null){
+            throw new BusinessException(Code.BUSINESS_ERR,"jobPass接口需要提供jobStudentId");
+        }
+        LambdaQueryWrapper<JobStudent> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(JobStudent::getJobStudentId,jobStudentDto.getJobStudentId());
+        JobStudent jobStudent1 = jobStudentMapper.selectOne(queryWrapper);
+        jobStudent1.setFeedback(1);
+        jobStudentMapper.updateById(jobStudent1);
         return new Result(true);
     }
 }

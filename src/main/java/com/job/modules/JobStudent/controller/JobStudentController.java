@@ -34,4 +34,19 @@ public class JobStudentController {
     public Result cancelJob(@RequestBody JobStudentDto jobStudentDto){
         return jobStudentService.cancelJob(jobStudentDto);
     }
+
+    @PostMapping("/selectJobStudentList")
+    public Result selectJobStudentList(@RequestBody JobStudentDto jobStudentDto){
+        return  jobStudentService.selectJobStudentList(jobStudentDto);
+    }
+
+    @PostMapping("/jobPass")
+    public Result jobPass(@RequestBody JobStudentDto jobStudentDto){
+        return jobStudentService.jobPass(jobStudentDto);
+    }
+
+    @PostMapping("/jobReject")
+    public Result jobReject(@RequestBody JobStudentDto jobStudentDto){
+        return jobStudentService.jobReject(jobStudentDto);
+    }
 }

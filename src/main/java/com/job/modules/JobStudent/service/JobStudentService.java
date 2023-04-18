@@ -10,5 +10,7 @@ public interface JobStudentService extends IService<JobStudent> {
     Result alreadySubmitJob(JobStudentDto jobStudentDto);
     Result submitJob(JobStudentDto jobStudentDto);
     Result cancelJob(JobStudentDto jobStudentDto);
-
+    Result selectJobStudentList(JobStudentDto jobStudentDto);
+    Result jobPass(JobStudentDto jobStudentDto);
+    Result jobReject(JobStudentDto jobStudentDto);
 }
