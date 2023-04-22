@@ -11,16 +11,19 @@ import com.job.common.utils.EncodeUtils;
 import com.job.entities.*;
 import com.job.mapper.*;
 import com.job.modules.Amount.dto.AmountListDto;
+import com.job.modules.Amount.dto.PasswordDto;
 import com.job.modules.Amount.service.AmountService;
 import com.job.modules.Login.service.LoginService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
 * @author cjf
@@ -156,6 +159,27 @@ public class AmountServiceImpl extends ServiceImpl<AmountMapper, Amount>
             return new Result(true);
         }
         throw new BusinessException(Code.BUSINESS_ERR,"更新账户需要传入相关账户信息");
+    }
+
+    @Override
+    public Result updatePassword(PasswordDto passwordDto) {
+        if(passwordDto.getAmountId()==null || passwordDto.getPrePassword() == null || passwordDto.getPassword()==null){
+            throw new BusinessException(Code.BUSINESS_ERR,"updatePassword修改密码缺少参数");
+        }
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+//        String preEncodedPassword = bCryptPasswordEncoder.encode(passwordDto.getPrePassword());
+        String encodedPassword = bCryptPasswordEncoder.encode(passwordDto.getPassword());
+
+        LambdaQueryWrapper<Amount> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Amount::getAmountId,passwordDto.getAmountId());
+        Amount amount = amountMapper.selectOne(queryWrapper);
+        if(bCryptPasswordEncoder.matches(passwordDto.getPrePassword(),amount.getPassword())){
+            amount.setPassword(encodedPassword);
+            amountMapper.updateById(amount);
+            return new Result(true);
+        }else {
+            throw new BusinessException(Code.BUSINESS_ERR,"原密码不正确，请重新输入！");
+        }
     }
 
     /**

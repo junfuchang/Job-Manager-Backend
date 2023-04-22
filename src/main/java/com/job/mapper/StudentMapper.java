@@ -1,10 +1,8 @@
 package com.job.mapper;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.job.entities.Student;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.job.modules.Student.dto.StudentListDto;
 import com.job.modules.Student.vo.StudentListVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

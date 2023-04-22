@@ -4,6 +4,7 @@ import com.job.common.domain.Result;
 import com.job.entities.Amount;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.job.modules.Amount.dto.AmountListDto;
+import com.job.modules.Amount.dto.PasswordDto;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -17,4 +18,5 @@ public interface AmountService extends IService<Amount> {
     Result insertAmount(AmountListDto amountListDto) throws InvocationTargetException, IllegalAccessException;
     Result deleteAmountById(AmountListDto amountListDto);
     Result updateAmount(AmountListDto amountListDto);
+    Result updatePassword(PasswordDto passwordDto);
 }

@@ -3,6 +3,7 @@ package com.job.modules.Major.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.job.common.domain.Result;
 import com.job.entities.Major;
+import com.job.modules.Major.dto.MajorDto;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -13,5 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface MajorService extends IService<Major> {
     Result getMajors();
-
+    Result selectMajorList(MajorDto majorDto);
+    Result updateMajor(MajorDto majorDto);
+    Result insertMajor(MajorDto majorDto);
+    Result deleteMajor(MajorDto majorDto);
 }

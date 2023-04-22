@@ -1,10 +1,14 @@
 package com.job.modules.Major.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.job.common.domain.Result;
 import com.job.common.enums.Code;
+import com.job.common.exception.BusinessException;
 import com.job.entities.Major;
 import com.job.mapper.MajorMapper;
+import com.job.modules.Major.dto.MajorDto;
 import com.job.modules.Major.service.MajorService;
 import com.job.modules.Major.vo.CollageAndMajorVo;
 import com.job.modules.Major.vo.SqlItemVo;
@@ -52,13 +56,51 @@ public class MajorServiceImpl extends ServiceImpl<MajorMapper, Major>
                 majorVo.setLabel(res.getMajorName());
                 resMap.get(res.getCollegeId()).getChildren().add(majorVo);
             }
-
         }
         resMap.forEach((key, value) -> {
             result.add(value);
         });
 
         return new Result(Code.SUCCESS,result,"级联选择：学院-专业");
+    }
+
+    @Override
+    public Result selectMajorList(MajorDto majorDto) {
+        if(majorDto.getCollegeId() == null){
+            throw new BusinessException(Code.BUSINESS_ERR , "collegeId不能为空");
+        }
+        LambdaQueryWrapper<Major> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Major::getCollegeId,majorDto.getCollegeId());
+        return new Result(majorMapper.selectPage(new Page<>(1, 200), queryWrapper));
+    }
+
+    @Override
+    public Result updateMajor(MajorDto majorDto) {
+        if(majorDto.getMajorId() == null){
+            throw new BusinessException(Code.BUSINESS_ERR , "majorId不能为空");
+        }
+        Major major = majorMapper.selectById(majorDto.getMajorId());
+        major.setName(majorDto.getName());
+        return new Result(majorMapper.updateById(major));
+    }
+
+    @Override
+    public Result insertMajor(MajorDto majorDto) {
+        if(majorDto.getCollegeId() == null){
+            throw new BusinessException(Code.BUSINESS_ERR , "collegeId不能为空");
+        }
+        Major major = new Major();
+        major.setCollegeId(majorDto.getCollegeId());
+        major.setName(majorDto.getName());
+        return new Result(majorMapper.insert(major));
+    }
+
+    @Override
+    public Result deleteMajor(MajorDto majorDto) {
+        if(majorDto.getMajorId() == null){
+            throw new BusinessException(Code.BUSINESS_ERR , "majorId不能为空");
+        }
+        return new Result(majorMapper.deleteById(majorDto.getMajorId()));
     }
 }
 

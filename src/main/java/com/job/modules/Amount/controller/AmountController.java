@@ -2,6 +2,7 @@ package com.job.modules.Amount.controller;
 
 import com.job.common.domain.Result;
 import com.job.modules.Amount.dto.AmountListDto;
+import com.job.modules.Amount.dto.PasswordDto;
 import com.job.modules.Amount.service.AmountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -41,5 +42,13 @@ public class AmountController {
     @PostAuthorize("@Permission.access('ADMIN')")
     public Result insertAmount(@RequestBody AmountListDto amountListDto) throws InvocationTargetException, IllegalAccessException {
         return amountService.insertAmount(amountListDto);
+    }
+
+    /**
+     * 修改密码
+     */
+    @PostMapping("/updatePassword")
+    public Result updatePassword(@RequestBody PasswordDto passwordDto) {
+        return amountService.updatePassword(passwordDto);
     }
 }

@@ -13,6 +13,7 @@ import com.job.modules.Job.vo.JobListVo;
 import com.job.modules.JobStudent.dto.JobStudentDto;
 import com.job.modules.JobStudent.service.JobStudentService;
 import com.job.modules.JobStudent.vo.JobStudentListVo;
+import com.job.modules.Student.vo.StudentListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,7 @@ public class JobStudentServiceImpl extends ServiceImpl<JobStudentMapper, JobStud
         wrapper.eq(JobStudent::getStudentId,jobStudentDto.getStudentId());
         JobStudent one = jobStudentMapper.selectOne(wrapper);
         if(one != null){
-            return new Result(true);
+            return new Result(one);
         }
         return new Result(false);
     }
@@ -73,19 +74,32 @@ public class JobStudentServiceImpl extends ServiceImpl<JobStudentMapper, JobStud
 
     @Override
     public Result selectJobStudentList(JobStudentDto jobStudentDto) {
-        if(jobStudentDto.getJobId() == null && jobStudentDto.getStudentId() == null ){
-            throw new BusinessException(Code.BUSINESS_ERR,"请传入JobId或StudentId参数");
+        if(jobStudentDto.getJobId() == null && jobStudentDto.getStudentId() == null && jobStudentDto.getCompanyId() == null ){
+            throw new BusinessException(Code.BUSINESS_ERR,"请传入companyId、jobId或studentId参数");
         }
         Integer current = jobStudentDto.getCurrent();
         Integer pageSize = jobStudentDto.getPageSize();
 
         HashMap<String, Object> hashMap = new HashMap<>();
+        if(jobStudentDto.getCompanyId() != null){
+            hashMap.put("companyId",jobStudentDto.getCompanyId());
+        }
         if(jobStudentDto.getJobId() != null){
             hashMap.put("jobId",jobStudentDto.getJobId());
         }
         if(jobStudentDto.getStudentId() != null){
             hashMap.put("studentId",jobStudentDto.getStudentId());
         }
+        if(jobStudentDto.getJobName() != null ){
+            hashMap.put("jobName",jobStudentDto.getJobName());
+        }
+        if(jobStudentDto.getCompanyName() != null ){
+            hashMap.put("companyName",jobStudentDto.getCompanyName());
+        }
+        if(jobStudentDto.getFeedback() != null && jobStudentDto.getFeedback() != -1){
+            hashMap.put("feedback",jobStudentDto.getFeedback());
+        }
+
         Page<JobStudentListVo> data = jobStudentMapper.selectJobStudentList(new Page<>(current,pageSize),hashMap);
         return new Result(data);
     }

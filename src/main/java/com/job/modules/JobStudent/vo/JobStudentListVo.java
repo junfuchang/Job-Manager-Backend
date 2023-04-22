@@ -8,6 +8,7 @@ import java.util.Date;
 @Data
 public class JobStudentListVo extends JobStudent {
     private Integer studentId;
+    private Integer feedback;
     private String name;
     private Integer gender;
     private Date birthday;
@@ -15,4 +16,6 @@ public class JobStudentListVo extends JobStudent {
     private String contact;
     private String resume;
     private String major;
+    private String job;
+    private String company;
 }

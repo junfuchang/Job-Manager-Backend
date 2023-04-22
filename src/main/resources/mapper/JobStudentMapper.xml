@@ -17,17 +17,34 @@
             s.contact,
             s.birthday,
             m.`name` AS major,
-            s.resume
+            s.resume,
+            j.title AS job,
+            c.`name` AS company,
+            c.company_id
         FROM job_student js
         LEFT JOIN student s ON js.student_id = s.student_id
         LEFT JOIN major m ON s.major_id = m.major_id
+        LEFT JOIN job j ON js.job_id = j.job_id
+        LEFT JOIN company c ON c.company_id = j.company_id
         <where>
             js.delete_flag = 0
+            <if test="map.companyId != null">
+                and c.company_id = #{map.companyId}
+            </if>
             <if test="map.jobId != null">
                 and js.`job_id` = #{map.jobId}
             </if>
             <if test="map.studentId != null">
-                and js.`studentId` = #{map.studentId}
+                and js.`student_id` = #{map.studentId}
+            </if>
+            <if test="map.jobName != null">
+                and j.title like concat('%',#{map.jobName},'%')
+            </if>
+            <if test="map.companyName != null">
+                and c.`name` like concat('%',#{map.companyName},'%')
+            </if>
+            <if test="map.feedback != null">
+                and js.feedback = #{map.feedback}
             </if>
         </where>
         ORDER BY js.date DESC

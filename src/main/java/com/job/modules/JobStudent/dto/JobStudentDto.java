@@ -8,6 +8,11 @@ public class JobStudentDto {
     private Integer jobId;
     private Integer studentId;
 
+    private Integer feedback;
+    private String jobName;
+    private String companyName;
+    private Integer companyId;
+
     /**
      * 分页参数
      */

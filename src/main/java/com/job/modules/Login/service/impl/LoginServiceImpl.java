@@ -11,12 +11,14 @@ import com.job.common.utils.EncodeUtils;
 import com.job.common.utils.JwtUtils;
 import com.job.entities.Amount;
 import com.job.entities.Company;
+import com.job.entities.Major;
 import com.job.entities.Student;
 import com.job.mapper.*;
 import com.job.modules.Login.dto.CompanyRegister;
 import com.job.modules.Login.dto.StudentRegister;
 import com.job.modules.Login.service.LoginService;
 import com.job.modules.Login.vo.MenuItemVo;
+import com.job.modules.Login.vo.RoleInfoVo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -40,6 +42,8 @@ public class LoginServiceImpl implements LoginService {
     private CompanyMapper companyMapper;
     @Autowired
     private MenuMapper menuMapper;
+    @Autowired
+    private MajorMapper majorMapper;
 
     @Override
     public HashMap<String, Object> login(Amount amount) {
@@ -75,10 +79,28 @@ public class LoginServiceImpl implements LoginService {
         HashMap<String, Object> res = new HashMap<>();
         // 放入对应角色的信息
         if(loginUser.getRoleId() == 0){
+            RoleInfoVo roleInfo = new RoleInfoVo();
             LambdaQueryWrapper<Student> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(Student::getAmountId,loginUser.getAmountId());
             Student student = studentMapper.selectOne(queryWrapper);
-            res.put("roleInfo",student);
+//            roleInfo
+            try {
+                BeanUtils.copyProperties(roleInfo,student);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+            Integer majorId = student.getMajorId();
+            LambdaQueryWrapper<Major> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(Major::getMajorId,majorId);
+            Major major = majorMapper.selectOne(wrapper);
+            if(major != null){
+                roleInfo.setCollegeId(major.getCollegeId());
+            }
+
+            res.put("roleInfo",roleInfo);
         }else if(loginUser.getRoleId() == 1){
             LambdaQueryWrapper<Company> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(Company::getAmountId,loginUser.getAmountId());
