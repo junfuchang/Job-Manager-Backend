@@ -46,6 +46,38 @@
         GROUP BY s.gender
     </select>
 
+    <select id="selectRateByYear" resultType="com.job.modules.Common.Vo.RateByYear">
+        SELECT
+            (
+                SELECT
+                    COUNT(*)
+                FROM student s
+                <where>
+                    s.delete_flag != 1 AND s.graduate_flag = 1 AND s.direction IN (1,2)
+                    <if test="year != null">
+                        AND YEAR(s.date) = #{year}
+                    </if>
+                    <if test="year == null">
+                        AND YEAR(s.date) IS NULL
+                    </if>
+                </where>
+            ) as jy_count,
+            (
+                SELECT
+                    COUNT(*)
+                FROM student s
+                <where>
+                    s.delete_flag != 1 AND s.graduate_flag = 1
+                    <if test="year != null">
+                        AND YEAR(s.date) = #{year}
+                    </if>
+                    <if test="year == null">
+                        AND YEAR(s.date) IS NULL
+                    </if>
+                </where>
+            ) as total_count
+    </select>
+
     <select id="selectOverviewMap" resultType="Integer">
         SELECT
             COUNT(s.student_id) as count
@@ -56,5 +88,31 @@
                 AND s.`city` like concat('%',#{locationCode},'%')
             </if>
         </where>
+    </select>
+
+    <select id="selectOverviewDetailNum" resultType="com.job.modules.Common.Vo.DetailNum">
+        SELECT
+            (
+                SELECT
+                    COUNT(*)
+                FROM student s
+                WHERE s.delete_flag = 0 AND s.graduate_flag = 1 AND YEAR(s.date) = YEAR(CURDATE())
+		    ) as graduate_num,
+            (
+                SELECT
+                    COUNT(*)
+                FROM job_student
+            ) as submit_num,
+            (
+                SELECT
+                    COUNT(*)
+                FROM job
+            ) as job_num,
+            (
+                SELECT
+                    COUNT(*)
+                FROM company c
+                WHERE c.delete_flag = 0
+            ) as company_num
     </select>
 </mapper>

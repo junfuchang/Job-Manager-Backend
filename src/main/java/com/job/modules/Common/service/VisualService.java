@@ -6,4 +6,6 @@ import com.job.modules.Common.dto.OverviewDto;
 public interface VisualService {
     Result getOverviewInfo();
     Result getOverviewMap(OverviewDto overviewDto);
+    Result getOverviewDetailRateByYear();
+    Result getOverviewDetailNum();
 }

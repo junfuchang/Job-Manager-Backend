@@ -4,6 +4,8 @@ import com.job.common.enums.Code;
 import com.job.common.exception.BusinessException;
 import com.job.mapper.CommonMapper;
 import com.job.modules.Common.Vo.CommonVo;
+import com.job.modules.Common.Vo.DetailNum;
+import com.job.modules.Common.Vo.RateByYear;
 import com.job.modules.Common.Vo.VisualVo;
 import com.job.modules.Common.dto.LocationItem;
 import com.job.modules.Common.dto.OverviewDto;
@@ -11,7 +13,9 @@ import com.job.modules.Common.service.VisualService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
 import java.sql.Array;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,5 +53,25 @@ public class VisualServiceImpl implements VisualService {
             hashMap.put(item.getName(),commonMapper.selectOverviewMap(item.getCode()));
         }
         return new Result(hashMap);
+    }
+
+    @Override
+    public Result getOverviewDetailRateByYear() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        HashMap<String, RateByYear> hashMap = new HashMap<>();
+        for (int i = 0; i < 3; i++) {
+            RateByYear list = commonMapper.selectRateByYear(year-i);
+            hashMap.put((year-i)+"年",list);
+        }
+        RateByYear nullData = commonMapper.selectRateByYear(null);
+        hashMap.put("无年份",nullData);
+        return new Result(hashMap);
+    }
+
+    @Override
+    public Result getOverviewDetailNum() {
+        DetailNum detail = commonMapper.selectOverviewDetailNum();
+        return new Result(detail);
     }
 }

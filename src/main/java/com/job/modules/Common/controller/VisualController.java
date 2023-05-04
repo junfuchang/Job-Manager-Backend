@@ -25,4 +25,14 @@ public class VisualController {
     public Result getOverviewMap(@RequestBody OverviewDto overviewDto){
         return visualService.getOverviewMap(overviewDto);
     }
+
+    @PostMapping("/rateByYear")
+    public  Result getOverviewDetailRateByYear(){
+        return visualService.getOverviewDetailRateByYear();
+    }
+
+    @PostMapping("/detailNum")
+    public Result getOverviewDetailNum(){
+        return visualService.getOverviewDetailNum();
+    }
 }
