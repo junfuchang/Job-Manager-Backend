@@ -12,9 +12,9 @@ import java.util.List;
 public interface CommonMapper extends BaseMapper {
     List<CommonVo> selectAllDirection();
     List<CommonVo> selectAllDegree();
-
     SalaryVo selectAllSalary();
+    List<CommonVo> selectAllGender(@Param("direction")  Integer direction);
 
-    Number selectOverviewMap(@Param("locationCode")  String locationCode);
+    Integer selectOverviewMap(@Param("locationCode")  String locationCode);
 
 }

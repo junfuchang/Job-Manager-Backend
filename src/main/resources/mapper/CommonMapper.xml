@@ -22,6 +22,7 @@
         WHERE s.delete_flag != 1 AND s.graduate_flag = 1
         GROUP BY s.degree
     </select>
+
     <select id="selectAllSalary" resultType="com.job.modules.Common.Vo.SalaryVo">
     SELECT
         (SELECT COUNT(*) FROM student WHERE salary between 1 and 2999) AS s0,
@@ -29,6 +30,20 @@
         (SELECT COUNT(*) FROM student WHERE salary between 6000 and 8999) AS s2,
         (SELECT COUNT(*) FROM student WHERE salary between 9000 and 11999) AS s3,
         (SELECT COUNT(*) FROM student WHERE salary >= 12000) AS s4
+    </select>
+
+    <select id="selectAllGender" resultType="com.job.modules.Common.Vo.CommonVo">
+        SELECT
+            s.gender as gender_type,
+            COUNT(s.gender) as gender_count
+        FROM student s
+        <where>
+            s.delete_flag = 0 AND s.graduate_flag = 1
+            <if test="direction != null">
+                AND s.`direction` = #{direction}
+            </if>
+        </where>
+        GROUP BY s.gender
     </select>
 
     <select id="selectOverviewMap" resultType="Integer">

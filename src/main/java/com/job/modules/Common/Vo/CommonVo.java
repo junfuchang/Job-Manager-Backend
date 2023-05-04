@@ -16,4 +16,8 @@ public class CommonVo {
 //    学历
     Integer degreeType;
     Integer degreeCount;
+
+//    性别分布
+    Integer genderType;
+    Integer genderCount;
 }

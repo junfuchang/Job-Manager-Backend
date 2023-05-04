@@ -11,6 +11,7 @@ import com.job.modules.Common.service.VisualService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Array;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,7 +27,14 @@ public class VisualServiceImpl implements VisualService {
         visualVo.setDegree(commonMapper.selectAllDegree());
         visualVo.setSalary(commonMapper.selectAllSalary());
 
-
+        // 遍历就业类型，获取每种类型的男女比例
+        Integer[] directionList = {0,1,2};
+        HashMap<Integer, List> hashMap = new HashMap<>();
+        for (Integer i : directionList) {
+            List<CommonVo> list = commonMapper.selectAllGender(i);
+            hashMap.put(i,list);
+        }
+        visualVo.setGender(hashMap);
         return new Result(visualVo);
     }
 
