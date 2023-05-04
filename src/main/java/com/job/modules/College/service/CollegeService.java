@@ -15,4 +15,7 @@ public interface CollegeService extends IService<College> {
     Result updateCollege(CollegeDto collegeDto);
     Result insertCollege(CollegeDto collegeDto);
     Result deleteCollege(CollegeDto collegeDto);
+
+    // 获取各学院升学情况
+    Result selectRateData();
 }

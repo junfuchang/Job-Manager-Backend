@@ -13,4 +13,17 @@
     <sql id="Base_Column_List">
         college_id,name,delete_flag
     </sql>
+
+    <select id="selectRateData" resultType="com.job.modules.College.vo.CollegeVisualVo">
+    SELECT
+        c.college_id,
+        c.`name`,
+        s.direction as direction_type,
+        COUNT(s.direction) as direction_count
+    FROM college c
+             LEFT JOIN major m ON (m.college_id = c.college_id)
+             LEFT JOIN student s ON s.major_id = m.major_id
+    WHERE c.delete_flag != 1 AND m.delete_flag != 1 AND s.delete_flag != 1 AND s.graduate_flag = 1
+    GROUP BY c.college_id,s.direction
+    </select>
 </mapper>

@@ -12,8 +12,11 @@ import com.job.mapper.MajorMapper;
 import com.job.modules.College.dto.CollegeDto;
 import com.job.modules.College.service.CollegeService;
 import com.job.mapper.CollegeMapper;
+import com.job.modules.College.vo.CollegeVisualVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
 * @author cjf
@@ -65,6 +68,14 @@ public class CollegeServiceImpl extends ServiceImpl<CollegeMapper, College>
         queryWrapper.eq(Major::getCollegeId,collegeDto.getCollegeId());
         majorMapper.delete(queryWrapper);
         return new Result( collegeMapper.deleteById(collegeDto.getCollegeId()));
+    }
+
+    @Override
+    public Result selectRateData() {
+        System.out.println("......\n");
+        List<CollegeVisualVo> rateData = collegeMapper.selectRateData();
+
+        return new Result( rateData);
     }
 }
 

@@ -2,7 +2,11 @@ package com.job.mapper;
 
 import com.job.entities.College;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.job.modules.College.vo.CollegeVisualVo;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.lang.reflect.Array;
+import java.util.List;
 
 /**
 * @author cjf
@@ -12,7 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
 */
 @Mapper
 public interface CollegeMapper extends BaseMapper<College> {
-
+     List<CollegeVisualVo> selectRateData();
 }
 
 
