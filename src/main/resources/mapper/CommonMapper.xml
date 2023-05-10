@@ -25,11 +25,11 @@
 
     <select id="selectAllSalary" resultType="com.job.modules.Common.Vo.SalaryVo">
     SELECT
-        (SELECT COUNT(*) FROM student WHERE salary between 1 and 2999) AS s0,
-        (SELECT COUNT(*) FROM student WHERE salary between 3000 and 5999) AS s1,
-        (SELECT COUNT(*) FROM student WHERE salary between 6000 and 8999) AS s2,
-        (SELECT COUNT(*) FROM student WHERE salary between 9000 and 11999) AS s3,
-        (SELECT COUNT(*) FROM student WHERE salary >= 12000) AS s4
+        (SELECT COUNT(*) FROM student WHERE salary between 1 and 2999 AND delete_flag = 0) AS s0,
+        (SELECT COUNT(*) FROM student WHERE salary between 3000 and 5999 AND delete_flag = 0) AS s1,
+        (SELECT COUNT(*) FROM student WHERE salary between 6000 and 8999 AND delete_flag = 0) AS s2,
+        (SELECT COUNT(*) FROM student WHERE salary between 9000 and 11999 AND delete_flag = 0) AS s3,
+        (SELECT COUNT(*) FROM student WHERE salary >= 12000 AND delete_flag = 0) AS s4
     </select>
 
     <select id="selectAllGender" resultType="com.job.modules.Common.Vo.CommonVo">
@@ -53,7 +53,7 @@
                     COUNT(*)
                 FROM student s
                 <where>
-                    s.delete_flag != 1 AND s.graduate_flag = 1 AND s.direction IN (1,2)
+                    s.delete_flag != 1 AND s.graduate_flag = 1 AND s.direction IN (0,1)
                     <if test="year != null">
                         AND YEAR(s.date) = #{year}
                     </if>

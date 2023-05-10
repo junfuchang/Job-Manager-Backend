@@ -119,6 +119,7 @@ public class AmountServiceImpl extends ServiceImpl<AmountMapper, Amount>
             // 删除相关岗位
             for (Job job:jobs
                  ) {
+                jobMapper.deleteById(job);
                 // 删除工作简历之间的关联
                 LambdaQueryWrapper<JobStudent> wrapper = new LambdaQueryWrapper<>();
                 wrapper.eq(JobStudent::getJobId,job.getJobId());
@@ -127,7 +128,6 @@ public class AmountServiceImpl extends ServiceImpl<AmountMapper, Amount>
                      ) {
                     jobStudentMapper.deleteById(jobStudent);
                 }
-                jobMapper.deleteById(job);
             }
             companyMapper.deleteById(company);
         }

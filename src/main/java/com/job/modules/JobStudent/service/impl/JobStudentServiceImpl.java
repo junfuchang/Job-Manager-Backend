@@ -63,13 +63,9 @@ public class JobStudentServiceImpl extends ServiceImpl<JobStudentMapper, JobStud
         LambdaQueryWrapper<JobStudent> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(JobStudent::getJobId,jobStudentDto.getJobId());
         wrapper.eq(JobStudent::getStudentId,jobStudentDto.getStudentId());
-        List<JobStudent> jobStudents = jobStudentMapper.selectList(wrapper);
-        for (JobStudent jobStudent: jobStudents
-             ) {
-            int delete = jobStudentMapper.deleteById(jobStudent);
-        }
+        int delete = jobStudentMapper.delete(wrapper);
 
-        return new Result(true);
+        return new Result(delete>=1);
     }
 
     @Override

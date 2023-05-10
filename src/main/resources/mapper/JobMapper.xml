@@ -42,7 +42,7 @@
         FROM job j
         LEFT JOIN company c ON c.`company_id` = j.`company_id`
         <where>
-            j.`delete_flag` = 0
+            j.`delete_flag` = 0 and c.`delete_flag` = 0
             <if test="map.title != null">
                 and j.`title` like concat('%',#{map.title},'%')
             </if>
