@@ -72,9 +72,7 @@ public class CollegeServiceImpl extends ServiceImpl<CollegeMapper, College>
 
     @Override
     public Result selectRateData() {
-        System.out.println("......\n");
         List<CollegeVisualVo> rateData = collegeMapper.selectRateData();
-
         return new Result( rateData);
     }
 }

@@ -11,7 +11,6 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        college_id,name,delete_flag
     </sql>
 
     <select id="selectRateData" resultType="com.job.modules.College.vo.CollegeVisualVo">

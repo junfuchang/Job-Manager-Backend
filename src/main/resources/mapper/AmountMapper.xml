@@ -13,8 +13,6 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        amount_id,role_id,username,
-        password,delete_flag
     </sql>
 
 </mapper>

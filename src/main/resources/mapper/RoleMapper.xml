@@ -11,6 +11,5 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        role_id,role,delete_flag
     </sql>
 </mapper>

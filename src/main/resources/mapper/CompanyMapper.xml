@@ -19,9 +19,5 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        company_id,amount_id,name,
-        code,type,contact,
-        address,website,remark,
-        pic,delete_flag
     </sql>
 </mapper>
