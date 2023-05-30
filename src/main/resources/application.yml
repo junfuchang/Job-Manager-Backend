@@ -10,8 +10,8 @@ mybatis-plus:
     banner: false
     db-config:
       id-type: auto
-      logic-not-delete-value: 0  # 代表逻辑未删除
-      logic-delete-value: 1  # 标识逻辑已删除
+      logic-not-delete-value: 0 # 代表逻辑未删除
+      logic-delete-value: 1 # 标识逻辑已删除
 
 security:
   jwt:
@@ -21,11 +21,11 @@ security:
     name: Token # 名称
 
 aliyun:
-  endpoint: oss-cn-hangzhou.aliyuncs.com
-  accessKeyId: LTAI4G6DTJsopnxiPSvPYbZn
-  accessKeySecret: wRlcJ2hRmALRTwKly0t4IKvEag0Hgh
-  bucketName: job-manager-junfuchang
-  urlPrefix: https://job-manager-junfuchang.oss-cn-hangzhou.aliyuncs.com/
+  endpoint: #
+  accessKeyId: #
+  accessKeySecret: #
+  bucketName: #
+  urlPrefix: #
 
 ---
 #开发环境
@@ -40,7 +40,7 @@ spring:
     password: "123456"
   mvc:
     pathmatch:
-      matching-strategy: ant_path_matcher  # 解决高版本springboot与swagger路径不兼容的情况
+      matching-strategy: ant_path_matcher # 解决高版本springboot与swagger路径不兼容的情况
   servlet:
     multipart:
       max-file-size: 100MB
@@ -55,13 +55,7 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-
-
-
 ---
-
-
-
 #生产环境
 spring:
   config:
